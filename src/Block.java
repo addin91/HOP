@@ -1,3 +1,5 @@
+package src;
+
 public class Block {
     private final int x, y;
     private final int width;

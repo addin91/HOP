@@ -1,3 +1,5 @@
+package src;
+
 public class Axel {
     public static final double MAX_FALL_SPEED = -20;
     public static final double JUMP_SPEED = 20;

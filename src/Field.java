@@ -1,3 +1,5 @@
+package src;
+
 public class Field {
     public static final int ALTITUDE_GAP = 80;
     public static final int START_ALTITUDE = 40;
