@@ -1,10 +1,29 @@
 public class Block {
-    private final int x, y;
+    private int x;
+    private int y;
     private final int width;
 
     public Block(int x, int y, int width) {
         this.x = x;
         this.y = y;
         this.width = width;
+    }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x){
+         this.x = x;
+    }
+
+    public void setY(int y){
+        this.y = y;
+    }
+    
+    public int getWidth() {
+        return width;
     }
 }

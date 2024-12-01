@@ -12,27 +12,40 @@ public class Hop {
     private final Axel axel;
     private Timer timer;
     private GamePanel gamePanel;
+    private boolean startGame = false;
 
     public Hop() {
         this.field = new Field(WIDTH, HEIGHT);
         this.axel = new Axel(field, WIDTH/2, field.START_ALTITUDE);
-        this.gamePanel = new GamePanel(field, axel);
-
+        this.gamePanel = new GamePanel(field, axel, this);
         this.frame = new JFrame("Hop!");
         frame.add(gamePanel);
+        frame.addKeyListener(gamePanel);
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    public boolean isGameStarted() {
+        return startGame;
+    }
+
+    public void startGame() {
+        this.startGame = true;
+    }
+
     public void round() {
+        if(!startGame){
+            return;
+        }
         axel.update();
         field.update();
+        gamePanel.updateScoreAndLevel();
         frame.repaint();
     }
 
     public boolean over() {
-        return false;
+        return !this.axel.getSurviving() || axel.getY() <= 0;
     }
 
     public static void main(String[] args) {
