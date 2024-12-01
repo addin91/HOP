@@ -19,9 +19,9 @@ public class Hop {
         this.field = new Field(WIDTH, HEIGHT);
         this.axel = new Axel(field, WIDTH/2, field.START_ALTITUDE);
         this.gamePanel = new GamePanel(field, axel);
-
         this.frame = new JFrame("Hop!");
         frame.add(gamePanel);
+        frame.addKeyListener(gamePanel);
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,7 +34,7 @@ public class Hop {
     }
 
     public boolean over() {
-        return false;
+        return !this.axel.getSurviving() || axel.getY() <= 0;
     }
 
     public static void main(String[] args) {
