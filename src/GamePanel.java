@@ -34,7 +34,8 @@ public class GamePanel extends JPanel implements KeyListener {
             g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
         }
         // Axel
-        g.drawOval(this.axel.getX(), this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+        g.drawImage(this.axel.getImage(), this.axel.getX(), this.axel.getY(), 40, 40, null);
+        //g.drawOval(this.axel.getX(), this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
         // Score
         int lastY = axel.getY();
             for (Block block : field.ensembleBlocks) {
@@ -49,6 +50,12 @@ public class GamePanel extends JPanel implements KeyListener {
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.drawString("Score : " + score, 10, 20);
         g.drawString("Difficulté: " + field.getSpeed(), 310, 20);
+
+        if (!game.isGameStarted()) {
+            g.setColor(new Color(0,0,0,180));
+            g.setFont(new Font("Arial", Font.BOLD, 15));
+            g.drawString("Appuyez sur une touche pour commencer !", 45, field.height / 2);
+        }
     }
 
     public void keyPressed(KeyEvent e){

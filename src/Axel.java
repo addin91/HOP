@@ -1,3 +1,8 @@
+import java.awt.Image;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 public class Axel {
     public static final double MAX_FALL_SPEED = -20;
     public static final double JUMP_SPEED = 20;
@@ -19,11 +24,23 @@ public class Axel {
 
     private final Field field;
 
+    private Image image;
+
     public Axel(Field f, int x, int y) {
         this.field = f;
         this.x = x;
         this.y = y;
         this.surviving = true;
+
+        try {
+            this.image = ImageIO.read(getClass().getResource("/axel1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Image getImage(){
+        return this.image;
     }
 
     public void update() { 
