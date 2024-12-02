@@ -34,8 +34,9 @@ public class GamePanel extends JPanel implements KeyListener {
             g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
         }
         // Axel
-        g.drawImage(this.axel.getImage(), this.axel.getX(), this.axel.getY(), 40, 40, null);
-        //g.drawOval(this.axel.getX(), this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+        //g.drawImage(this.axel.getImage(), this.axel.getX(), this.axel.getY(), 40, 40, null);
+        g.setColor(Color.RED);
+        g.fillOval(this.axel.getX(), this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
         // Score
         int lastY = axel.getY();
             for (Block block : field.ensembleBlocks) {

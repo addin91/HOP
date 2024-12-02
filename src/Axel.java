@@ -24,7 +24,7 @@ public class Axel {
 
     private final Field field;
 
-    private Image image;
+    //private Image image;
 
     public Axel(Field f, int x, int y) {
         this.field = f;
@@ -32,16 +32,16 @@ public class Axel {
         this.y = y;
         this.surviving = true;
 
-        try {
+        /*try {
             this.image = ImageIO.read(getClass().getResource("/axel1.png"));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
-    public Image getImage(){
+    /*public Image getImage(){
         return this.image;
-    }
+    }*/
 
     public void update() { 
         computeMove();
