@@ -1,8 +1,3 @@
-import java.awt.Image;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 public class Axel {
     public static final double MAX_FALL_SPEED = -20;
     public static final double JUMP_SPEED = 20;

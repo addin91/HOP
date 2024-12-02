@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class Hop {
@@ -16,7 +15,7 @@ public class Hop {
 
     public Hop() {
         this.field = new Field(WIDTH, HEIGHT);
-        this.axel = new Axel(field, WIDTH/2, field.START_ALTITUDE);
+        this.axel = new Axel(field, WIDTH/2, Field.START_ALTITUDE);
         this.gamePanel = new GamePanel(field, axel, this);
         this.frame = new JFrame("Hop!");
         frame.add(gamePanel);
