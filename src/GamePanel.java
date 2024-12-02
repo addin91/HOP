@@ -12,6 +12,8 @@ public class GamePanel extends JPanel implements KeyListener {
 
     private final Axel axel;
     private final Field field;
+    private int score = 0;
+    private int niveau = 1;
 
     public GamePanel(Field field, Axel axel) {
         this.field = field;
@@ -29,14 +31,37 @@ public class GamePanel extends JPanel implements KeyListener {
         super.paintComponent(g);
         g.setColor ( new Color (0 , 0 , 0 , 255));
         for(Block b: this.field.ensembleBlocks){
-            System.out.println("");
             g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
         }
-        g.drawOval(this.axel.getX(), this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+        // Axel
+        //g.drawImage(this.axel.getImage(), this.axel.getX(), this.axel.getY(), 40, 40, null);
+        g.setColor(Color.RED);
+        g.fillOval(this.axel.getX(), this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+        // Score
+        int lastY = axel.getY();
+            for (Block block : field.ensembleBlocks) {
+                if (axel.getY() < block.getY() && axel.getY() + AXEL_HEIGHT > block.getY()) {
+                    score+=(int)(Math.random()*10);
+                    lastY = axel.getY();
+                    break;
+                }
+            }
+        g.rotate(Math.toRadians(180.0), x, y);
+        g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 15));
+        g.drawString("Score : " + score, 10, 20);
+        g.drawString("Difficulté: " + Hop.speed, 310, 20);
 
+        if (!Hop.startGame) {
+            g.setColor(new Color(0,0,0,180));
+            g.setFont(new Font("Arial", Font.BOLD, 15));
+            g.drawString("Appuyez sur une touche pour commencer !", 45, field.height / 2);
+        }
+        
     }
 
     public void keyPressed(KeyEvent e){
+
         switch (e.getKeyCode()) {
             // Plonge
             case KeyEvent.VK_DOWN:
@@ -45,6 +70,7 @@ public class GamePanel extends JPanel implements KeyListener {
             // Saute
             case KeyEvent.VK_UP:
                 this.axel.setJumping(true);
+                Hop.startGame = true;
                 break;
             // Gauche
             case KeyEvent.VK_LEFT:
@@ -79,6 +105,15 @@ public class GamePanel extends JPanel implements KeyListener {
             default: break;
         }
     }
+
+    public void updateScoreAndLevel() {
+        if (score / 150 > niveau - 1) {
+            niveau++;
+            field.increaseDifficulty();
+        }
+    }
+
                   
     public void keyTyped(KeyEvent e){}
+
 }

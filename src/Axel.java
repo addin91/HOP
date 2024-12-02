@@ -21,12 +21,24 @@ public class Axel {
 
     private final Field field;
 
+    //private Image image;
+
     public Axel(Field f, int x, int y) {
         this.field = f;
         this.x = x;
         this.y = y;
         this.surviving = true;
+
+        /*try {
+            this.image = ImageIO.read(getClass().getResource("/axel1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
+
+    /*public Image getImage(){
+        return this.image;
+    }*/
 
     public void update() { 
         computeMove();
@@ -43,8 +55,10 @@ public class Axel {
             this.y += updateVitesseY(false, false, true);
         }
         if(diving) this.y+= updateVitesseY(false, true, false);
-        System.out.println("X : " + this.x);
-        System.out.println("Y : " + this.y);
+
+        if (vitesseY == 0) {
+            this.y -= Hop.speed;
+        }
 
     }
 

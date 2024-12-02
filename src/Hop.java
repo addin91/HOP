@@ -8,6 +8,8 @@ public class Hop {
     public static final int WIDTH = 400;
     public static final int HEIGHT = 600;
     public static final int DELAY = 40;
+    public static int speed = 1;
+    public static boolean startGame = false;
 
     private final JFrame frame;
     private final Field field;
@@ -27,9 +29,21 @@ public class Hop {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    public boolean isGameStarted() {
+        return startGame;
+    }
+
+    public void startGame() {
+        this.startGame = true;
+    }
+
     public void round() {
+        if(!startGame){
+            return;
+        }
         axel.update();
         field.update();
+        gamePanel.updateScoreAndLevel();
         frame.repaint();
     }
 
