@@ -12,6 +12,7 @@ CLASSES = \
         src/Field.java \
         src/Axel.java \
         src/GamePanel.java \
+		src/MenuPanel.java \
         src/Hop.java 
 
 # Avec "make" coompile les fichiers

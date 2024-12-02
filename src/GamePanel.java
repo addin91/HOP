@@ -50,18 +50,21 @@ public class GamePanel extends JPanel implements KeyListener {
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.drawString("Score : " + score, 10, 20);
-        g.drawString("Difficulté: " + Hop.speed, 310, 20);
+        g.drawString("Difficulté: " + Hop.speed, 300, 20);
 
         if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));
             g.setFont(new Font("Arial", Font.BOLD, 15));
-            g.drawString("Appuyez sur une touche pour commencer !", 45, field.height / 2);
+            g.drawString("Appuyez sur une touche pour commencer !", 42, field.height / 2);
         }
         
     }
 
     public void keyPressed(KeyEvent e){
-
+        if (!Hop.startGame) {
+            Hop.startGame = true; 
+            return;
+        }
         switch (e.getKeyCode()) {
             // Plonge
             case KeyEvent.VK_DOWN:
