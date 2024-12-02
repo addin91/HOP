@@ -29,14 +29,6 @@ public class Hop {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public boolean isGameStarted() {
-        return startGame;
-    }
-
-    public void startGame() {
-        this.startGame = true;
-    }
-
     public void round() {
         if(!startGame){
             return;

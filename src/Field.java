@@ -3,7 +3,6 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.Block;
 
 public class Field {
     public static final int ALTITUDE_GAP = 80;
@@ -64,6 +63,8 @@ public class Field {
         }
         this.ensembleBlocks.removeAll(blockDeplaces);
         
+        // L'erreur des blocks qui se rajoute au debut vient du code ci-dessous
+        /* 
         if (this.top + ALTITUDE_GAP <= height) {
             this.top += ALTITUDE_GAP;
             int widthNextBlock = 30 + (int)(Math.random() * 41);
@@ -74,6 +75,7 @@ public class Field {
             Block b = new Block(x, this.top, widthNextBlock);
             this.ensembleBlocks.add(b);
         }
+        */
      }
 
      public void increaseDifficulty() {

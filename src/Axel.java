@@ -45,16 +45,19 @@ public class Axel {
     }
 
     public void computeMove(){
+
         if(right) this.x-=vitesseX(true);
         if(left) this.x+=vitesseX(false);
+        updateVitesseY(jumping, diving, falling);
         if(jumping){
-            this.y+=updateVitesseY(true, false, false);
+            this.y+=vitesseY;
             this.falling = true;
+            this.jumping = false;
         } 
         if(falling){
-            this.y += updateVitesseY(false, false, true);
+            this.y += vitesseY;
         }
-        if(diving) this.y+= updateVitesseY(false, true, false);
+        if(diving) this.y+= vitesseY;
 
         if (vitesseY == 0) {
             this.y -= Hop.speed;
