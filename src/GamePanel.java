@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
@@ -12,12 +14,10 @@ public class GamePanel extends JPanel implements KeyListener {
     private final Field field;
     private int score = 0;
     private int niveau = 1;
-    private final Hop game;
 
-    public GamePanel(Field field, Axel axel, Hop game) {
+    public GamePanel(Field field, Axel axel) {
         this.field = field;
         this.axel = axel;
-        this.game = game;
         setBackground ( new Color (161 , 202 , 241));
         setPreferredSize(new Dimension(field.width, field.height));
     }
@@ -50,18 +50,20 @@ public class GamePanel extends JPanel implements KeyListener {
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.drawString("Score : " + score, 10, 20);
-        g.drawString("Difficulté: " + field.getSpeed(), 310, 20);
+        g.drawString("Difficulté: " + Hop.speed, 300, 20);
 
-        if (!game.isGameStarted()) {
+        if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));
             g.setFont(new Font("Arial", Font.BOLD, 15));
-            g.drawString("Appuyez sur une touche pour commencer !", 45, field.height / 2);
+            g.drawString("Appuyez sur une touche pour commencer !", 42, field.height / 2);
         }
+        
     }
 
     public void keyPressed(KeyEvent e){
-        if (!game.isGameStarted()) {
-            game.startGame();
+        if (!Hop.startGame) {
+            Hop.startGame = true; 
+            return;
         }
         switch (e.getKeyCode()) {
             // Plonge
@@ -71,6 +73,7 @@ public class GamePanel extends JPanel implements KeyListener {
             // Saute
             case KeyEvent.VK_UP:
                 this.axel.setJumping(true);
+                Hop.startGame = true;
                 break;
             // Gauche
             case KeyEvent.VK_LEFT:

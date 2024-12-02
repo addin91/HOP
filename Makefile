@@ -1,26 +1,32 @@
 
 JFLAGS = -g
 JC = javac
+J = java
 .SUFFIXES: .java .class
 .java.class:
 		$(JC) $(JFLAGS) $*.java
 
 # L'ensemble des fichiers java
 CLASSES = \
-        src/Axel.java \
         src/Block.java \
         src/Field.java \
+        src/Axel.java \
         src/GamePanel.java \
         src/Hop.java 
 
 # Avec "make" coompile les fichiers
-default: classes
+default: \
+		classes \
+		execute
+
+execute:
+		$(J) src.Hop
 
 classes: $(CLASSES:.java=.class)
 
 # Nettoie le répertoire src des .class
 clean:
-		$(RM) *.class
+		$(RM) src/*.class
 
 # Envoie sur Git
 push:

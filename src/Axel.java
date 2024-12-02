@@ -1,3 +1,5 @@
+package src;
+
 public class Axel {
     public static final double MAX_FALL_SPEED = -20;
     public static final double JUMP_SPEED = 20;
@@ -43,19 +45,24 @@ public class Axel {
     }
 
     public void computeMove(){
+
         if(right) this.x-=vitesseX(true);
         if(left) this.x+=vitesseX(false);
+        updateVitesseY(jumping, diving, falling);
         if(jumping){
-            this.y+=updateVitesseY(true, false, false);
+            this.y+=vitesseY;
             this.falling = true;
+            this.jumping = false;
         } 
         if(falling){
-            this.y += updateVitesseY(false, false, true);
+            this.y += vitesseY;
         }
-        if(diving) this.y+= updateVitesseY(false, true, false);
-        //System.out.println("X : " + this.x);
-        //System.out.println("Y : " + this.y);
-        checkCollision(x, y);
+        if(diving) this.y+= vitesseY;
+
+        if (vitesseY == 0) {
+            this.y -= Hop.speed;
+        }
+
     }
 
     public double vitesseX(boolean toRight){
@@ -75,14 +82,6 @@ public class Axel {
         if (dive){
             if(vitesseY != 0) vitesseY = vitesseY - DIVE_SPEED > MAX_FALL_SPEED ? vitesseY - DIVE_SPEED : MAX_FALL_SPEED;
         }
-        if (jump && vitesseY > 0) {
-            vitesseY -= GRAVITY;
-            if (vitesseY <= 0) {
-                jumping = false; 
-                falling = true;  
-            }
-        }
-        
         if(vitesseY < 0){
             for(int i = -1; i >= vitesseY; i--){
                 checkCollision(0, i);
