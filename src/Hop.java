@@ -26,8 +26,8 @@ public class Hop {
         frame.add(menuPanel);
 
         frame.setSize(WIDTH, HEIGHT);
-        frame.setResizable(false);
         frame.setVisible(true);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
@@ -55,7 +55,6 @@ public class Hop {
     public void round() {
         if (playing && nbround>0) {
             this.nbround--;
-            System.out.println("Gameing");
             this.frame.remove(menuPanel);
             //this.frame.removeKeyListener(menuPanel);
 //        }
@@ -85,7 +84,6 @@ public class Hop {
         Hop game = new Hop();
 
         game.timer = new Timer(DELAY, (ActionEvent e) -> {
-                System.out.println("iter");
                 game.round();
                 if (game.over()) {
                     game.timer.stop();

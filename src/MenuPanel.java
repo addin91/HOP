@@ -23,7 +23,6 @@ public class MenuPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Hop.playing = true;
-                System.out.println("hop true");
             }
         });
         this.add(startButton, BorderLayout.CENTER);

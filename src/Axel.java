@@ -2,7 +2,7 @@ package src;
 
 public class Axel {
     public static final double MAX_FALL_SPEED = -20;
-    public static final double JUMP_SPEED = 20;
+    public static final double JUMP_SPEED = 18;
     public static final double GRAVITY = 1;
     public static final double DIVE_SPEED = 3 * GRAVITY;
     public static final double LATERAL_SPEED = 8;
@@ -57,11 +57,14 @@ public class Axel {
         if(falling){
             this.y += vitesseY;
         }
-        if(diving) this.y+= updateVitesseY(false, true, false);
-
+        if(diving) {
+            this.y+= updateVitesseY(false, true, false);
+        }
         if (vitesseY == 0) {
             this.y -= Hop.speed;
         }
+
+        
 
     }
 
@@ -98,6 +101,7 @@ public class Axel {
         }else{
             this.falling = false;
             vitesseY = 0;
+            y = (y + addY);
         }
     }
 

@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements KeyListener {
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.drawString("Score : " + score, 10, 20);
-        g.drawString("Difficulté: " + Hop.speed, 310, 20);
+        g.drawString("Difficulté: " + Hop.speed, 300, 20);
 
         if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));
@@ -67,11 +67,6 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e){
-
-        System.out.println("Tocuh");
-        
-        
-
         switch (e.getKeyCode()) {
             // Plonge
             case KeyEvent.VK_DOWN:
