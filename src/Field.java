@@ -39,7 +39,7 @@ public class Field {
     }
 
     public void addBlock(int y) {
-        int widthBlock = Math.max(20, blockWidth + (int) (Math.random() * 11 - 5)); // Randomize block width
+        int widthBlock = 50; // Randomize block width
         int x = (int) (Math.random() * (width - widthBlock));
         Block block = new Block(x, y, widthBlock);
         ensembleBlocks.add(block);
@@ -50,7 +50,7 @@ public class Field {
             int xB1 = b.getX();
             int xB2 = xB1 + b.getWidth();
             int yB = b.getY();
-            if(x > xB1 && x < xB2 && y == yB) return false;
+            if(x >= xB1 && x <= xB2 && y == yB) return false;
         }
         return true;
     }

@@ -4,11 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class MenuPanel extends JPanel implements KeyListener {
-    public MenuPanel(Hop hop) {
+public class MenuPanel extends JPanel {
+    public MenuPanel() {
         setBackground(new Color(100, 150, 200));
         setLayout(new BorderLayout());
 
@@ -24,21 +22,11 @@ public class MenuPanel extends JPanel implements KeyListener {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                hop.startGame();
+                Hop.playing = true;
+                System.out.println("hop true");
             }
         });
         this.add(startButton, BorderLayout.CENTER);
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {}
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode()==KeyEvent.VK_SPACE){
-            Hop.startGame = true;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e){}
 }

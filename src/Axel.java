@@ -57,7 +57,7 @@ public class Axel {
         if(falling){
             this.y += vitesseY;
         }
-        if(diving) this.y+= vitesseY;
+        if(diving) this.y+= updateVitesseY(false, true, false);
 
         if (vitesseY == 0) {
             this.y -= Hop.speed;

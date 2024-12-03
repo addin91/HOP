@@ -2,6 +2,7 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
@@ -15,11 +16,13 @@ public class GamePanel extends JPanel implements KeyListener {
     private int score = 0;
     private int niveau = 1;
 
+    
     public GamePanel(Field field, Axel axel) {
         this.field = field;
         this.axel = axel;
         setBackground ( new Color (161 , 202 , 241));
         setPreferredSize(new Dimension(field.width, field.height));
+
     }
 
     public void paintComponent(Graphics graphics) {
@@ -29,6 +32,9 @@ public class GamePanel extends JPanel implements KeyListener {
         int y = this.getHeight() / 2;
         g.rotate(Math.toRadians(180.0), x, y);
         super.paintComponent(g);
+
+
+
         g.setColor ( new Color (0 , 0 , 0 , 255));
         for(Block b: this.field.ensembleBlocks){
             g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
@@ -36,7 +42,7 @@ public class GamePanel extends JPanel implements KeyListener {
         // Axel
         //g.drawImage(this.axel.getImage(), this.axel.getX(), this.axel.getY(), 40, 40, null);
         g.setColor(Color.RED);
-        g.fillOval(this.axel.getX(), this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+        g.fillOval(this.axel.getX()-AXEL_WIDTH/2, this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
         // Score
         int lastY = axel.getY();
             for (Block block : field.ensembleBlocks) {
@@ -50,21 +56,22 @@ public class GamePanel extends JPanel implements KeyListener {
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.drawString("Score : " + score, 10, 20);
-        g.drawString("Difficulté: " + Hop.speed, 300, 20);
+        g.drawString("Difficulté: " + Hop.speed, 310, 20);
 
         if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));
             g.setFont(new Font("Arial", Font.BOLD, 15));
-            g.drawString("Appuyez sur une touche pour commencer !", 42, field.height / 2);
+            g.drawString("Appuyez sur une touche pour commencer !", 45, field.height / 2);
         }
         
     }
 
     public void keyPressed(KeyEvent e){
-        if (!Hop.startGame) {
-            Hop.startGame = true; 
-            return;
-        }
+
+        System.out.println("Tocuh");
+        
+        
+
         switch (e.getKeyCode()) {
             // Plonge
             case KeyEvent.VK_DOWN:
