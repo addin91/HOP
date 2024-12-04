@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements KeyListener {
     private final Axel axel;
     private final Field field;
     private int score = 0;
-    private int niveau = 1;
+    private int niveau = 0;
 
     
     public GamePanel(Field field, Axel axel) {
@@ -44,19 +44,14 @@ public class GamePanel extends JPanel implements KeyListener {
         g.setColor(Color.RED);
         g.fillOval(this.axel.getX()-AXEL_WIDTH/2, this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
         // Score
-        int lastY = axel.getY();
-            for (Block block : field.ensembleBlocks) {
-                if (axel.getY() < block.getY() && axel.getY() + AXEL_HEIGHT > block.getY()) {
-                    score+=(int)(Math.random()*10);
-                    lastY = axel.getY();
-                    break;
-                }
-            }
+
+
+        
         g.rotate(Math.toRadians(180.0), x, y);
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 15));
-        g.drawString("Score : " + score, 10, 20);
-        g.drawString("Difficulté: " + Hop.speed, 300, 20);
+        g.drawString("Score : " + this.field.getScore(), 10, 20);
+        g.drawString("Difficulté: " + niveau, 300, 20);
 
         if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));
@@ -112,10 +107,40 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     public void updateScoreAndLevel() {
-        if (score / 150 > niveau - 1) {
-            niveau++;
-            field.increaseDifficulty();
-        }
+            if(this.field.getScore() >= 7200){
+                niveau = 6;
+                Hop.speed = 6;
+                this.field.increaseWidthBlock();
+            }
+            else if(this.field.getScore() >= 4800){
+                niveau = 5;
+                Hop.speed = 5;
+                this.field.increaseWidthBlock();
+            }
+            else if(this.field.getScore() >= 3200){
+                niveau = 4;
+                Hop.speed = 4;
+                this.field.increaseWidthBlock();
+            }
+            else if(this.field.getScore() >= 2000){
+                niveau = 3;
+                Hop.speed = 3;
+                this.field.increaseWidthBlock();
+            }
+            else if(this.field.getScore() >= 800){
+                niveau = 2;
+                Hop.speed = 2;
+                this.field.increaseWidthBlock();
+            }
+            else if(this.field.getScore() >= 80){
+                niveau = 1;
+                Hop.speed = 1;
+                this.field.increaseWidthBlock();
+            }
+
+        
+
+
     }
 
                   

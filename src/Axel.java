@@ -21,6 +21,9 @@ public class Axel {
 
     private final Field field;
 
+    private int score;
+    private Block lastBlock;
+
     //private Image image;
 
     public Axel(Field f, int x, int y) {
@@ -28,6 +31,9 @@ public class Axel {
         this.x = x;
         this.y = y;
         this.surviving = true;
+
+
+        this.score= 0;
 
         /*try {
             this.image = ImageIO.read(getClass().getResource("/axel1.png"));
@@ -51,16 +57,17 @@ public class Axel {
         updateVitesseY(jumping, diving, falling);
         if(jumping){
             this.y+=vitesseY;
-            this.falling = true;
             this.jumping = false;
+
+            if(vitesseY > 0) this.falling = true;
         } 
-        if(falling){
+        else if(falling){
             this.y += vitesseY;
         }
-        if(diving) {
-            this.y+= updateVitesseY(false, true, false);
+        else if(diving) {
+            this.y+= vitesseY;
         }
-        if (vitesseY == 0) {
+        else if (vitesseY == 0 && field.getScore() > 0) {
             this.y -= Hop.speed;
         }
 
@@ -77,7 +84,7 @@ public class Axel {
 
     public double updateVitesseY(boolean jump, boolean dive, boolean fall){
         if(jump){
-            if(vitesseY == 0) vitesseY = JUMP_SPEED;
+            if(vitesseY == 0 && !falling) vitesseY = JUMP_SPEED;
         }
         if(fall){
             vitesseY = vitesseY - GRAVITY > MAX_FALL_SPEED ? vitesseY-GRAVITY : MAX_FALL_SPEED;
@@ -102,6 +109,7 @@ public class Axel {
             this.falling = false;
             vitesseY = 0;
             y = (y + addY);
+            score = Math.max(score, y - Field.START_ALTITUDE);
         }
     }
 
@@ -136,5 +144,8 @@ public class Axel {
     }
     public int getY() {
         return y;
+    }
+    public int getScore() {
+        return score;
     }
 }
