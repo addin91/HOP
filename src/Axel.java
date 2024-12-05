@@ -66,6 +66,7 @@ public class Axel {
         }
         else if(diving) {
             this.y+= vitesseY;
+            this.falling = true; // Correction du bug
         }
         else if (vitesseY == 0 && field.getScore() > 0) {
             this.y -= Hop.speed;
