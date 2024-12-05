@@ -41,12 +41,12 @@ public class Field {
             }
             Block b = new Block(x, y, widthNextBlock);
             this.ensembleBlocks.add(b);
-        */}
+        */}/* 
         for(Block b : this.ensembleBlocks){
             System.out.println("x : " + b.getX());
             System.out.println("y : " + b.getY());
             System.out.println();
-        }
+        }*/
     }
 
     public void addBlock(int y, int id) {
