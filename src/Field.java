@@ -30,7 +30,7 @@ public class Field {
         Block b1 = new Block(this.width / 2 - startBlockWidth / 2, y, startBlockWidth, 0);
         this.ensembleBlocks.add(b1);
 
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 200; i++) {
 
             y += ALTITUDE_GAP;
             addBlock(y, i);

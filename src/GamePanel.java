@@ -39,14 +39,13 @@ public class GamePanel extends JPanel implements KeyListener {
         for(Block b: this.field.ensembleBlocks){
             g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
         }
+
         // Axel
         //g.drawImage(this.axel.getImage(), this.axel.getX(), this.axel.getY(), 40, 40, null);
         g.setColor(Color.RED);
         g.fillOval(this.axel.getX()-AXEL_WIDTH/2, this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
-        // Score
-
-
         
+        // Score
         g.rotate(Math.toRadians(180.0), x, y);
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 15));
@@ -56,9 +55,8 @@ public class GamePanel extends JPanel implements KeyListener {
         if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));
             g.setFont(new Font("Arial", Font.BOLD, 15));
-            g.drawString("Appuyez sur une touche pour commencer !", 45, field.height / 2);
+            g.drawString("Appuyez sur une touche pour commencer !", 40, field.height / 2);
         }
-        
     }
 
     public void keyPressed(KeyEvent e){
