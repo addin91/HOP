@@ -19,6 +19,8 @@ public class Axel {
 
     private boolean surviving;
 
+    private String name;
+
     private final Field field;
 
     private int score;
@@ -31,6 +33,7 @@ public class Axel {
         this.x = x;
         this.y = y;
         this.surviving = true;
+        this.name = "Player";
 
 
         this.score= 0;
@@ -67,7 +70,7 @@ public class Axel {
         else if(diving) {
             this.y+= vitesseY;
         }
-        else if (vitesseY == 0 && field.getScore() > 0) {
+        if (vitesseY == 0 && field.getScore() > 0) {
             this.y -= Hop.speed;
         }
 
@@ -133,6 +136,9 @@ public class Axel {
     public void setSurviving(boolean surviving) {
         this.surviving = surviving;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     // GETTERS
 
@@ -147,5 +153,8 @@ public class Axel {
     }
     public int getScore() {
         return score;
+    }
+    public String getName() {
+        return name;
     }
 }
