@@ -13,16 +13,33 @@ public class GamePanel extends JPanel implements KeyListener {
 
     private final Axel axel;
     private final Field field;
-    private int score = 0;
+    //private int score = 0;
     private int niveau = 0;
+
+    private final Image Game;
+
+    private final int lavaHeight = 20;
+    private int lavaOffset = 0;
+    private final Timer lavaAnimation;
 
     
     public GamePanel(Field field, Axel axel) {
         this.field = field;
         this.axel = axel;
-        setBackground ( new Color (161 , 202 , 241));
-        setPreferredSize(new Dimension(field.width, field.height));
+        this.Game = new ImageIcon(getClass().getResource("/assets/images/InterfaceGame.png")).getImage();
 
+        setPreferredSize(new Dimension(field.width, field.height));
+        addKeyListener(this);
+        setFocusable(true);
+
+        lavaAnimation = new Timer(50, e -> {
+            lavaOffset += 3; // Faire défiler les vagues
+            if (lavaOffset >= 50) {
+                lavaOffset = 0; // Réinitialiser après un cycle
+            }
+            repaint();
+        });
+        lavaAnimation.start();
     }
 
     public void paintComponent(Graphics graphics) {
@@ -30,11 +47,11 @@ public class GamePanel extends JPanel implements KeyListener {
         Graphics2D g = (Graphics2D) graphics;
         int x = this.getWidth() / 2;
         int y = this.getHeight() / 2;
-        g.rotate(Math.toRadians(180.0), x, y);
         super.paintComponent(g);
-
-
-
+        if (Game != null) {
+            g.drawImage(Game, 0, 0, getWidth(), getHeight(), this);
+        }
+        g.rotate(Math.toRadians(180.0), x, y);
         g.setColor ( new Color (0 , 0 , 0 , 255));
         for(Block b: this.field.ensembleBlocks){
             g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
@@ -57,7 +74,23 @@ public class GamePanel extends JPanel implements KeyListener {
             g.setFont(new Font("Arial", Font.BOLD, 15));
             g.drawString("Appuyez sur une touche pour commencer !", 40, field.height / 2);
         }
+
+        drawLava(g);
     }
+
+    private void drawLava(Graphics2D g) {
+        // Couleur principale de la lave
+        g.setColor(new Color(255, 40, 0));
+        g.fillRect(0, getHeight() - lavaHeight, getWidth(), lavaHeight);
+
+        // Ajouter des vagues mouvantes
+        g.setColor(new Color(255, 100, 0));
+        int waveWidth = 50;
+        for (int x = -waveWidth + lavaOffset; x < getWidth(); x += waveWidth) {
+            g.fillArc(x, getHeight() - lavaHeight - 10, waveWidth, 20, 0, 180);
+        }
+    }
+
 
     public void keyPressed(KeyEvent e){
         switch (e.getKeyCode()) {

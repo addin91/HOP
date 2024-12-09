@@ -7,18 +7,22 @@ import java.awt.event.ActionListener;
 
 public class MenuPanel extends JPanel {
     public MenuPanel() {
-        setBackground(new Color(0, 96, 173));
         setLayout(new BorderLayout());
 
-        // Logo Hop
-        JPanel logoPanel = new JPanel();
-        logoPanel.setBackground(new Color(0, 96, 173)); // Même couleur de fond
-        logoPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Centrer le logo horizontalement
-        ImageIcon icone = new ImageIcon(getClass().getResource("/assets/images/HopLogo.png"));
-        Image newImage = icone.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-        JLabel logo = new JLabel(new ImageIcon(newImage));
-        logoPanel.add(logo);
-        add(logoPanel, BorderLayout.NORTH); 
+        // Interface
+        JPanel backgroundPanel = new JPanel() {
+            private Image backgroundImage = new ImageIcon(getClass().getResource("/assets/images/InterfaceHop.png")).getImage();
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (backgroundImage != null) {
+                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                }
+            }
+        };
+        backgroundPanel.setLayout(new BorderLayout());
+        JPanel contentPanel = new JPanel(new GridBagLayout());
+        contentPanel.setOpaque(false);
 
         // Bouton de démarrage
         JButton startButton = new JButton("Commencer le jeu");
@@ -30,9 +34,11 @@ public class MenuPanel extends JPanel {
             }
         });
 
-        JPanel buttonPanel = new JPanel(new GridBagLayout());
-        buttonPanel.setBackground(new Color(0, 96, 173));
-        buttonPanel.add(startButton);
-        add(buttonPanel);
+        // Ajouter le bouton au panneau
+        contentPanel.add(startButton);
+
+        // Ajouter les panneaux à la hiérarchie
+        backgroundPanel.add(contentPanel, BorderLayout.CENTER); // Composants superposés
+        add(backgroundPanel, BorderLayout.CENTER);
     }
 }

@@ -9,7 +9,7 @@ public class Field {
     public static final int START_ALTITUDE = 40;
 
     public final int width, height;
-    private int bottom, top; // bottom and top altitude
+    //private int bottom, top; // bottom and top altitude
     public List<Block> ensembleBlocks = new ArrayList<Block>();
     private int minBlockWidth;
     private int maxBlockWidth;
