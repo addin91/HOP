@@ -41,21 +41,29 @@
   },
   "11": {
     "name": "Player",
-    "score": 0
+    "score": 80
   },
   "12": {
     "name": "Player",
-    "score": 0
+    "score": 80
   },
   "13": {
     "name": "Player",
-    "score": 0
+    "score": 80
   },
   "14": {
     "name": "Player",
     "score": 0
   },
   "15": {
+    "name": "Player",
+    "score": 0
+  },
+  "16": {
+    "name": "Player",
+    "score": 0
+  },
+  "17": {
     "name": "Player",
     "score": 0
   }
