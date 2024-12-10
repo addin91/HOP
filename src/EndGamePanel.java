@@ -2,15 +2,12 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EndGamePanel extends JPanel {
     //private Clip endGameMusicClip;
-    private int finalScore;
+    //private int finalScore;
     
     public EndGamePanel(){
         setLayout(new BorderLayout());
@@ -26,8 +23,18 @@ public class EndGamePanel extends JPanel {
             }
         };
         backgroundPanel.setLayout(new BorderLayout());
-        JPanel contentPanel = new JPanel(new GridBagLayout());
-        contentPanel.setOpaque(false);
+        
+        // Panneau de contenu où les boutons seront ajoutés
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 60, 50));
+        contentPanel.setOpaque(false);  // Rendre transparent pour voir le fond
+
+        // Bouton "Rejouer"
+        JButton replayButton = new JButton("Rejouer");
+        replayButton.setFont(new Font("Arial", Font.PLAIN, 18));
+        // à compléter 
+
+        // Bouton "Quitter"
         JButton quitButton = new JButton("Quitter");
         quitButton.setFont(new Font("Arial", Font.PLAIN, 18));
         quitButton.addActionListener(new ActionListener() {
@@ -36,16 +43,12 @@ public class EndGamePanel extends JPanel {
                 System.exit(0); // Quitte l'application
             }
         });
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setOpaque(false); // Transparent pour voir le fond
-        buttonPanel.setLayout(new FlowLayout());
 
-        JButton replayButton = new JButton("Rejouer");
-        replayButton.setFont(new Font("Arial", Font.PLAIN, 18));
-        buttonPanel.add(replayButton);
-        buttonPanel.add(quitButton);
+        contentPanel.add(quitButton);
+        contentPanel.add(replayButton);
 
-        // Ajoute le panneau des boutons
-        add(buttonPanel, BorderLayout.SOUTH);
+        // Ajouter les panneaux à la hiérarchie
+        backgroundPanel.add(contentPanel, BorderLayout.CENTER);  // Composants superposés
+        add(backgroundPanel, BorderLayout.CENTER);  // Panneau de fond en bas
     }
 }
