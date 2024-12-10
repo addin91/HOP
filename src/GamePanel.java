@@ -35,8 +35,12 @@ public class GamePanel extends JPanel implements KeyListener {
 
 
 
-        g.setColor ( new Color (0 , 0 , 0 , 255));
+        
         for(Block b: this.field.ensembleBlocks){
+            if(b.isKicking())       g.setColor ( new Color (255 , 0 , 0 , 255));
+            else if(b.isBreaking()) g.setColor ( new Color (0 , 0 , 255 , 255));
+            else if(b.isMoving())   g.setColor ( new Color (0 , 255 , 0 , 255));
+            else                    g.setColor ( new Color (0 , 0 , 0 , 255));
             g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
         }
         // Axel
@@ -106,7 +110,15 @@ public class GamePanel extends JPanel implements KeyListener {
         }
     }
 
+
     public void updateScoreAndLevel() {
+
+            for(Block b  : field.ensembleBlocks){
+                if(b.isMoving()){
+                    b.effet(axel);
+                }
+            }
+
             if(this.field.getScore() >= 7200){
                 niveau = 6;
                 Hop.speed = 6;

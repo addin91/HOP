@@ -43,16 +43,24 @@ public class Field {
             this.ensembleBlocks.add(b);
         */}
         for(Block b : this.ensembleBlocks){
-            System.out.println("x : " + b.getX());
-            System.out.println("y : " + b.getY());
+            System.out.println("id : " + b.getId());
+            System.out.println("moving : " + b.isMoving());
             System.out.println();
         }
     }
 
     public void addBlock(int y, int id) {
+        
         int widthBlock = minBlockWidth + (int)(Math.random() * ((maxBlockWidth - minBlockWidth) + 1));; // Randomize block width
         int x = (int) (Math.random() * (width - widthBlock));
-        Block block = new Block(x, y, widthBlock, id);
+        int alea = (int) (Math.random());
+        Block block;
+        if(id == 1) block = new Block(x, y, widthBlock, id, false, false, true);
+        else if(y >= 2000 && alea < 0.3) {  block = new Block(x, y, widthBlock, id, true, false, false); }
+        else if(y >= 3200 && alea < 0.6) {  block = new Block(x, y, widthBlock, id, false, true, false); }
+        else if(y >= 4800 && alea < 0.9) {  block = new Block(x, y, widthBlock, id, false, false, true); }
+        else {  block = new Block(x, y, widthBlock, id); }
+        
         ensembleBlocks.add(block);
     }
 
@@ -78,6 +86,12 @@ public class Field {
                 else b.setY(b.getY() - Hop.speed);
             }
             this.ensembleBlocks.removeAll(blockDeplaces);
+            for(Block b : this.ensembleBlocks){
+                System.out.println("id : " + b.getId());
+                System.out.println("kicking : " + b.isKicking());
+                System.out.println("Breaking : " + b.isBreaking());
+                System.out.println();
+            }
         }
         
         
@@ -108,7 +122,13 @@ public class Field {
     public int getScore() {
         return score;
     }
+    
 
+    // SETTERS
+
+    public void setScore(int score) {
+        this.score = score;
+    }
  
 }
  

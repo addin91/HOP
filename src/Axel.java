@@ -85,7 +85,7 @@ public class Axel {
         return LATERAL_SPEED;
     }
 
-    public double updateVitesseY(boolean jump, boolean dive, boolean fall){
+    public void updateVitesseY(boolean jump, boolean dive, boolean fall){
         if(jump){
             if(vitesseY == 0 && !falling) vitesseY = JUMP_SPEED;
         }
@@ -98,26 +98,58 @@ public class Axel {
         if(vitesseY < 0){
             for(int i = -1; i >= vitesseY; i--){
                 checkCollision(0, i);
-                if(vitesseY == 0) return i;
             }
         }
-        return vitesseY;
         
     }
 
     public void checkCollision(int addX, int addY){
-        if (this.field.libre(x+addX, y+addY)){
-            this.falling = true;
-        }else{
-            this.falling = false;
-            vitesseY = 0;
-            y = (y + addY);
-            score = Math.max(score, y - Field.START_ALTITUDE);
+
+        for(Block b : this.field.ensembleBlocks){
+            int xB1 = b.getX();
+            int xB2 = xB1 + b.getWidth();
+            int yB = b.getY();
+            if(x+addX >= xB1 && x+addX <= xB2 && y+addY == yB) {
+                this.falling = false;
+                vitesseY = 0;
+                y = (y + addY);
+                this.field.setScore(Math.max(this.field.getScore(), b.getId()*80));
+                b.setHabiter(true);
+                if(vitesseY == 0) b.effet(this);
+                return;
+            }else{
+                b.setHabiter(false);
+            }
         }
+        this.falling = true;
     }
 
+/* 
+    public boolean libre(int x, int y){
+        for(Block b : this.field.ensembleBlocks){
+            int xB1 = b.getX();
+            int xB2 = xB1 + b.getWidth();
+            int yB = b.getY();
+            if(x >= xB1 && x <= xB2 && y == yB) {
+                this.score = Math.max(score, b.getId()*80);
+                b.effet(this);
+                return false;
+            
+            }
+        }
+        return true;
+    }
+
+    public void effet(){
+
+    }
+
+    */
+
     // SETTERS
-    
+    public void setVitesseY(double vitesseY) {
+        this.vitesseY = vitesseY;
+    }
     public void setDiving(boolean diving) {
         this.diving = diving;
     }
@@ -139,6 +171,9 @@ public class Axel {
     public void setName(String name) {
         this.name = name;
     }
+    public void setX(int x) {
+        this.x = x;
+    }
 
     // GETTERS
 
@@ -156,5 +191,14 @@ public class Axel {
     }
     public String getName() {
         return name;
+    }
+    public Field getField() {
+        return field;
+    }
+    public double getVitesseY() {
+        return vitesseY;
+    }
+    public boolean isFalling() {
+        return falling;
     }
 }
