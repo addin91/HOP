@@ -9,7 +9,7 @@ public class Field {
     public static final int START_ALTITUDE = 40;
 
     public final int width, height;
-    private int bottom, top; // bottom and top altitude
+    //private int bottom, top; // bottom and top altitude
     public List<Block> ensembleBlocks = new ArrayList<Block>();
     private int minBlockWidth;
     private int maxBlockWidth;
@@ -30,7 +30,7 @@ public class Field {
         Block b1 = new Block(this.width / 2 - startBlockWidth / 2, y, startBlockWidth, 0);
         this.ensembleBlocks.add(b1);
 
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 200; i++) {
 
             y += ALTITUDE_GAP;
             addBlock(y, i);
@@ -41,27 +41,32 @@ public class Field {
             }
             Block b = new Block(x, y, widthNextBlock);
             this.ensembleBlocks.add(b);
-        */}
+        */}/* 
         for(Block b : this.ensembleBlocks){
             System.out.println("id : " + b.getId());
             System.out.println("moving : " + b.isMoving());
             System.out.println();
-        }
+        }*/
     }
 
     public void addBlock(int y, int id) {
         
         int widthBlock = minBlockWidth + (int)(Math.random() * ((maxBlockWidth - minBlockWidth) + 1));; // Randomize block width
-        int x = (int) (Math.random() * (width - widthBlock));
-        int alea = (int) (Math.random());
+
+        int range = (( Hop.WIDTH - GamePanel.BORDER_LEFT - widthBlock) - (GamePanel.BORDER_RIGHT));
+     	int x = (int) ((range * Math.random())+GamePanel.BORDER_RIGHT);
+
+        double alea = Math.random();
         Block block;
-        if(id == 1) block = new Block(x, y, widthBlock, id, false, false, true);
-        else if(y >= 2000 && alea < 0.3) {  block = new Block(x, y, widthBlock, id, true, false, false); }
-        else if(y >= 3200 && alea < 0.6) {  block = new Block(x, y, widthBlock, id, false, true, false); }
-        else if(y >= 4800 && alea < 0.9) {  block = new Block(x, y, widthBlock, id, false, false, true); }
+        if(y >= 2000 && alea < 0.15 ) {  block = new Block(x, y, widthBlock, id, true, false, false); }
+        else if(y >= 3200 && alea < 0.25) {  block = new Block(x, y, widthBlock, id, false, true, false); }
+        else if(y >= 4800 && alea < 0.5) {  block = new Block(x, y, widthBlock, id, false, false, true); }
         else {  block = new Block(x, y, widthBlock, id); }
         
         ensembleBlocks.add(block);
+        System.out.println("id : " + block.getId());
+        System.out.println("x : " + block.getX());
+        System.out.println();
     }
 
     public boolean libre(int x, int y){
@@ -86,12 +91,6 @@ public class Field {
                 else b.setY(b.getY() - Hop.speed);
             }
             this.ensembleBlocks.removeAll(blockDeplaces);
-            for(Block b : this.ensembleBlocks){
-                System.out.println("id : " + b.getId());
-                System.out.println("kicking : " + b.isKicking());
-                System.out.println("Breaking : " + b.isBreaking());
-                System.out.println();
-            }
         }
         
         

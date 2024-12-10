@@ -24,7 +24,7 @@ public class Axel {
     private final Field field;
 
     private int score;
-    private Block lastBlock;
+    //private Block lastBlock;
 
     //private Image image;
 
@@ -81,7 +81,10 @@ public class Axel {
     public double vitesseX(boolean toRight){
         for(int i = 1; i <= LATERAL_SPEED; i++){
             checkCollision(((toRight) ? -i : i), 0);
+            if(toRight && this.x - i <= GamePanel.BORDER_RIGHT || !toRight && this.x + i >= Hop.WIDTH - GamePanel.BORDER_LEFT) return --i;
+            
         }
+
         return LATERAL_SPEED;
     }
 

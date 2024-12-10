@@ -10,19 +10,38 @@ public class GamePanel extends JPanel implements KeyListener {
     private static final int BLOCK_HEIGHT = 10;
     private static final int AXEL_WIDTH = 10;
     private static final int AXEL_HEIGHT = 10;
+    public static final int BORDER_RIGHT = 33;
+    public static final int BORDER_LEFT = 37;
 
     private final Axel axel;
     private final Field field;
-    private int score = 0;
+    //private int score = 0;
     private int niveau = 0;
+
+    private final Image Game;
+
+    private final int lavaHeight = 20;
+    private int lavaOffset = 0;
+    private final Timer lavaAnimation;
 
     
     public GamePanel(Field field, Axel axel) {
         this.field = field;
         this.axel = axel;
-        setBackground ( new Color (161 , 202 , 241));
-        setPreferredSize(new Dimension(field.width, field.height));
+        this.Game = new ImageIcon(getClass().getResource("/assets/images/InterfaceGame.png")).getImage();
 
+        setPreferredSize(new Dimension(field.width, field.height));
+        addKeyListener(this);
+        setFocusable(true);
+
+        lavaAnimation = new Timer(50, e -> {
+            lavaOffset += 3; // Faire défiler les vagues
+            if (lavaOffset >= 50) {
+                lavaOffset = 0; // Réinitialiser après un cycle
+            }
+            repaint();
+        });
+        lavaAnimation.start();
     }
 
     public void paintComponent(Graphics graphics) {
@@ -30,12 +49,12 @@ public class GamePanel extends JPanel implements KeyListener {
         Graphics2D g = (Graphics2D) graphics;
         int x = this.getWidth() / 2;
         int y = this.getHeight() / 2;
-        g.rotate(Math.toRadians(180.0), x, y);
         super.paintComponent(g);
-
-
-
-        
+        if (Game != null) {
+            g.drawImage(Game, 0, 0, getWidth(), getHeight(), this);
+        }
+        g.rotate(Math.toRadians(180.0), x, y);
+        g.setColor ( new Color (0 , 0 , 0 , 255));
         for(Block b: this.field.ensembleBlocks){
             if(b.isKicking())       g.setColor ( new Color (255 , 0 , 0 , 255));
             else if(b.isBreaking()) g.setColor ( new Color (0 , 0 , 255 , 255));
@@ -43,14 +62,13 @@ public class GamePanel extends JPanel implements KeyListener {
             else                    g.setColor ( new Color (0 , 0 , 0 , 255));
             g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
         }
+
         // Axel
         //g.drawImage(this.axel.getImage(), this.axel.getX(), this.axel.getY(), 40, 40, null);
         g.setColor(Color.RED);
         g.fillOval(this.axel.getX()-AXEL_WIDTH/2, this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
-        // Score
-
-
         
+        // Score
         g.rotate(Math.toRadians(180.0), x, y);
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 15));
@@ -60,10 +78,25 @@ public class GamePanel extends JPanel implements KeyListener {
         if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));
             g.setFont(new Font("Arial", Font.BOLD, 15));
-            g.drawString("Appuyez sur une touche pour commencer !", 45, field.height / 2);
+            g.drawString("Appuyez sur une touche pour commencer !", 40, field.height / 2);
         }
-        
+
+        drawLava(g);
     }
+
+    private void drawLava(Graphics2D g) {
+        // Couleur principale de la lave
+        g.setColor(new Color(255, 40, 0));
+        g.fillRect(0, getHeight() - lavaHeight, getWidth(), lavaHeight);
+
+        // Ajouter des vagues mouvantes
+        g.setColor(new Color(255, 100, 0));
+        int waveWidth = 50;
+        for (int x = -waveWidth + lavaOffset; x < getWidth(); x += waveWidth) {
+            g.fillArc(x, getHeight() - lavaHeight - 10, waveWidth, 20, 0, 180);
+        }
+    }
+
 
     public void keyPressed(KeyEvent e){
         switch (e.getKeyCode()) {

@@ -7,14 +7,22 @@ import java.awt.event.ActionListener;
 
 public class MenuPanel extends JPanel {
     public MenuPanel() {
-        setBackground(new Color(100, 150, 200));
         setLayout(new BorderLayout());
 
-        // Titre
-        JLabel titleLabel = new JLabel("Hop!", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
-        titleLabel.setForeground(Color.WHITE);
-        add(titleLabel, BorderLayout.NORTH);
+        // Interface
+        JPanel backgroundPanel = new JPanel() {
+            private Image backgroundImage = new ImageIcon(getClass().getResource("/assets/images/InterfaceHop.png")).getImage();
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (backgroundImage != null) {
+                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                }
+            }
+        };
+        backgroundPanel.setLayout(new BorderLayout());
+        JPanel contentPanel = new JPanel(new GridBagLayout());
+        contentPanel.setOpaque(false);
 
         // Bouton de démarrage
         JButton startButton = new JButton("Commencer le jeu");
@@ -25,7 +33,12 @@ public class MenuPanel extends JPanel {
                 Hop.playing = true;
             }
         });
-        this.add(startButton, BorderLayout.CENTER);
-    }
 
+        // Ajouter le bouton au panneau
+        contentPanel.add(startButton);
+
+        // Ajouter les panneaux à la hiérarchie
+        backgroundPanel.add(contentPanel, BorderLayout.CENTER); // Composants superposés
+        add(backgroundPanel, BorderLayout.CENTER);
+    }
 }
