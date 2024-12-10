@@ -1,4 +1,3 @@
-
 JFLAGS = -g
 JC = javac
 J = java
@@ -13,6 +12,7 @@ CLASSES = \
         src/Axel.java \
         src/GamePanel.java \
 		src/MenuPanel.java \
+		src/Db.java \
         src/Hop.java 
 
 # Avec "make" coompile les fichiers

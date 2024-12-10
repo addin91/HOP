@@ -1,5 +1,14 @@
 package src;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
@@ -18,6 +27,7 @@ public class Hop {
     public Timer timer;
     private GamePanel gamePanel;
     public MenuPanel menuPanel;
+    private Db db;
 
     public Hop() {
         this.frame =  new JFrame("Hop!");
@@ -36,6 +46,8 @@ public class Hop {
         this.gamePanel = new GamePanel(field, axel);
         frame.add(gamePanel);
         frame.addKeyListener(gamePanel);
+
+        this.db = new Db();
     }
 
 /*     public void startGame() {
@@ -80,6 +92,13 @@ public class Hop {
         return !this.axel.getSurviving() || axel.getY() < 0;
     }
 
+    public void registre(){
+        db.readFromFile();
+        db.addPerson(axel.getName(), field.getScore());
+        db.sortRanking();
+        db.writeToFile();
+    }
+
     public static void main(String[] args) {
         Hop game = new Hop();
 
@@ -87,6 +106,7 @@ public class Hop {
                 game.round();
                 if (game.over()) {
                     game.timer.stop();
+                    game.registre();
                     JOptionPane.showMessageDialog(game.frame, "Game Over!", "Hop!", JOptionPane.INFORMATION_MESSAGE);
                     game.frame.remove(game.gamePanel);
                     System.exit(0);
