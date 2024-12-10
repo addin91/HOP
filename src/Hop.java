@@ -26,7 +26,8 @@ public class Hop {
     private final Axel axel;
     public Timer timer;
     private GamePanel gamePanel;
-    public MenuPanel menuPanel;
+    private MenuPanel menuPanel;
+    private EndGamePanel endGamePanel;
     private Db db;
 
     public Hop() {
@@ -92,6 +93,13 @@ public class Hop {
         return !this.axel.getSurviving() || axel.getY() < 0;
     }
 
+    public void showEndGame(){
+        endGamePanel = new EndGamePanel();
+        frame.setContentPane(endGamePanel);
+        frame.revalidate();
+        frame.repaint();
+    }
+
     public void registre(){
         db.readFromFile();
         db.addPerson(axel.getName(), field.getScore());
@@ -107,9 +115,10 @@ public class Hop {
                 if (game.over()) {
                     game.timer.stop();
                     game.registre();
-                    JOptionPane.showMessageDialog(game.frame, "Game Over!", "Hop!", JOptionPane.INFORMATION_MESSAGE);
+                    //JOptionPane.showMessageDialog(game.frame, "Game Over!", "Hop!", JOptionPane.INFORMATION_MESSAGE);
                     game.frame.remove(game.gamePanel);
-                    System.exit(0);
+                    game.showEndGame();
+                    //System.exit(0);
                 }
 
         });
