@@ -1,16 +1,9 @@
 package src;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Hop {
     public static final int WIDTH = 400;
@@ -28,10 +21,15 @@ public class Hop {
     private GamePanel gamePanel;
     private MenuPanel menuPanel;
     private EndGamePanel endGamePanel;
+    private MusicGame musicGame;
     private Db db;
 
     public Hop() {
         this.frame =  new JFrame("Hop!");
+        ArrayList<String> musicFiles = new ArrayList<>();
+        musicFiles.add("assets/audio/OST1.wav");
+        this.musicGame = new MusicGame(musicFiles);
+        musicGame.playRandom();
 
         this.menuPanel = new MenuPanel();
         frame.add(menuPanel);
@@ -94,6 +92,7 @@ public class Hop {
     }
 
     public void showEndGame(){
+        musicGame.stop();
         endGamePanel = new EndGamePanel();
         frame.setContentPane(endGamePanel);
         frame.revalidate();

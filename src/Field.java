@@ -23,7 +23,6 @@ public class Field {
         this.score = 0;
         initialiseEnsembleBlocks();
     }
-/* */
     private void initialiseEnsembleBlocks(){
         int y = START_ALTITUDE;
         int startBlockWidth = 100;

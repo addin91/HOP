@@ -1,15 +1,21 @@
 package src;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class EndGamePanel extends JPanel {
-    //private Clip endGameMusicClip;
+    private MusicGame musicGame;
     //private int finalScore;
     
     public EndGamePanel(){
+        ArrayList<String> endGameMusicClip = new ArrayList<>();
+        endGameMusicClip.add("assets/audio/MarioDeath.wav");
+        this.musicGame = new MusicGame(endGameMusicClip);
+        musicGame.playRandom();
         setLayout(new BorderLayout());
         // Interface
         JPanel backgroundPanel = new JPanel() {
@@ -26,13 +32,18 @@ public class EndGamePanel extends JPanel {
         
         // Panneau de contenu où les boutons seront ajoutés
         JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 60, 50));
+        contentPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 50));
         contentPanel.setOpaque(false);  // Rendre transparent pour voir le fond
 
         // Bouton "Rejouer"
         JButton replayButton = new JButton("Rejouer");
         replayButton.setFont(new Font("Arial", Font.PLAIN, 18));
-        // à compléter 
+        replayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                /* */
+            }
+        }); 
 
         // Bouton "Quitter"
         JButton quitButton = new JButton("Quitter");
@@ -48,7 +59,7 @@ public class EndGamePanel extends JPanel {
         contentPanel.add(replayButton);
 
         // Ajouter les panneaux à la hiérarchie
-        backgroundPanel.add(contentPanel, BorderLayout.CENTER);  // Composants superposés
+        backgroundPanel.add(contentPanel, BorderLayout.SOUTH);  // Composants superposés
         add(backgroundPanel, BorderLayout.CENTER);  // Panneau de fond en bas
     }
 }

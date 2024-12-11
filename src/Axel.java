@@ -52,7 +52,7 @@ public class Axel {
     public void update() { 
         computeMove();
     }
-
+ 
     public void computeMove(){
 
         if(right) this.x-=vitesseX(true);
