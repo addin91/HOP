@@ -72,8 +72,8 @@ public class GamePanel extends JPanel implements KeyListener {
         g.rotate(Math.toRadians(180.0), x, y);
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 15));
-        g.drawString("Score : " + this.field.getScore(), 10, 20);
-        g.drawString("Difficulté: " + niveau, 300, 20);
+        g.drawString("Score : " + this.field.getScore(), BORDER_LEFT, 20);
+        g.drawString("Difficulté: " + niveau, Hop.WIDTH-BORDER_RIGHT-100, 20);
 
         if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));

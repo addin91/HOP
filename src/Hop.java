@@ -12,6 +12,7 @@ public class Hop {
     public static int speed = 1;
     public static boolean startGame = false;
     public static boolean playing = false;
+    public static boolean replay = false;
     private int nbround= 1;
 
     private final JFrame frame;
@@ -105,22 +106,25 @@ public class Hop {
         db.sortRanking();
         db.writeToFile();
     }
+    
 
     public static void main(String[] args) {
-        Hop game = new Hop();
+            Hop game = new Hop();
 
-        game.timer = new Timer(DELAY, (ActionEvent e) -> {
-                game.round();
-                if (game.over()) {
-                    game.timer.stop();
-                    game.registre();
-                    //JOptionPane.showMessageDialog(game.frame, "Game Over!", "Hop!", JOptionPane.INFORMATION_MESSAGE);
-                    game.frame.remove(game.gamePanel);
-                    game.showEndGame();
-                    //System.exit(0);
-                }
+            game.timer = new Timer(DELAY, (ActionEvent e) -> {
+                    game.round();
+                    if (game.over()) {
+                        game.timer.stop();
+                        game.registre();
+                        //JOptionPane.showMessageDialog(game.frame, "Game Over!", "Hop!", JOptionPane.INFORMATION_MESSAGE);
+                        game.frame.remove(game.gamePanel);
+                        game.showEndGame();
+                        //System.exit(0);
+                    }
 
-        });
-        game.timer.start();
+
+            });
+            game.timer.start();
+        
     }
 }

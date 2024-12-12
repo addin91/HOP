@@ -61,8 +61,8 @@ public class Block {
     
         }
         else if(moving){
-            if(x < 10)                            coefMoving = 1;
-            else if (x > Hop.WIDTH - width - 10) coefMoving = -1;
+            if(x < GamePanel.BORDER_RIGHT) coefMoving = 1;
+            else if (x > Hop.WIDTH - width - GamePanel.BORDER_LEFT) coefMoving = -1;
             x+=coefMoving;
             if(a.getVitesseY() == 0 && a.isFalling() == false && this.habiter){
                 a.setX(a.getX() + coefMoving);
