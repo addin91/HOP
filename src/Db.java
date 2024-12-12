@@ -12,25 +12,24 @@ import java.util.*;
 
 public class Db {
 
-    private Map<Integer, Person> ranking;
+    private Map<Integer, Player> ranking;
     private String filename;
 
     public Db(){
-        this.ranking = new LinkedHashMap<Integer, Person>();
+        this.ranking = new LinkedHashMap<Integer, Player>();
         this.filename = "db.json";
     }
 
 
-    // Lire le fichier JSON et retourner une Map<Integer, Person>
+    // Lire le fichier JSON et retourner une Map<Integer, Player>
     public void readFromFile() {
         try (FileReader reader = new FileReader(filename)) {
             // Définir le type exact de la Map à désérialiser
-            Type type = new TypeToken<Map<Integer, Person>>() {}.getType();
+            Type type = new TypeToken<Map<Integer, Player>>() {}.getType();
             Gson gson = new Gson();
-            ranking = gson.fromJson(reader, type);
+            if (reader.ready()) ranking = gson.fromJson(reader, type);
         } catch (IOException e) {
             e.printStackTrace();
-            ranking = new HashMap<>(); // Retourne une map vide si erreur
         }
     }
 
@@ -46,24 +45,31 @@ public class Db {
 
     // Ajouter une nouvelle personne dans le classement
     public void addPerson(String name, int score) {
-        Person newPerson = new Person(name, score);
+        Player newPlayer = new Player(name, score);
         // Trouver un ID disponible
-        int newId = ranking.size() + 1;
-        ranking.put(newId, newPerson);
+        int newId = (this.ranking.size() > 0 ? ranking.size() + 1 : 1);
+        ranking.putIfAbsent(newId, newPlayer);
     }
+
+    // Trouver le meilleur score enregistrer
+    public int bestScore() {
+        if(this.ranking.isEmpty()) return 0;
+        else return this.ranking.get(1).getScore();
+    }
+
 
     // Trier les personnes par score décroissant
     public void sortRanking() {
         // Convertir la Map en une liste pour trier
-        List<Map.Entry<Integer, Person>> list = new ArrayList<>(ranking.entrySet());
+        List<Map.Entry<Integer, Player>> list = new ArrayList<>(ranking.entrySet());
 
         // Trier par score décroissant
         list.sort((entry1, entry2) -> Integer.compare(entry2.getValue().score, entry1.getValue().score));
 
         // Recréer une Map triée
-        Map<Integer, Person> sortedMap = new LinkedHashMap<>();
+        Map<Integer, Player> sortedMap = new LinkedHashMap<>();
         int index = 1;
-        for (Map.Entry<Integer, Person> entry : list) {
+        for (Map.Entry<Integer, Player> entry : list) {
             sortedMap.put(index++, entry.getValue());
         }
 
@@ -72,17 +78,19 @@ public class Db {
 }
 
 
-class Person {
+class Player {
     String name;
     int score;
 
-    public Person(String name, int score) {
+    public Player(String name, int score) {
         this.name = name;
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "Person{name='" + name + "', score=" + score + "}";
+    public String getName() {
+        return name;
+    }
+    public int getScore() {
+        return score;
     }
 }

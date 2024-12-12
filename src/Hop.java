@@ -68,6 +68,7 @@ public class Hop {
         if (playing && nbround>0) {
             this.nbround--;
             this.frame.remove(menuPanel);
+            this.axel.setName(menuPanel.getPlayerName());
             //this.frame.removeKeyListener(menuPanel);
 //        }
         //if(nbround==0) 
@@ -94,7 +95,7 @@ public class Hop {
 
     public void showEndGame(){
         musicGame.stop();
-        endGamePanel = new EndGamePanel();
+        endGamePanel = new EndGamePanel(this.field.getScore(), this.db.bestScore());
         frame.setContentPane(endGamePanel);
         frame.revalidate();
         frame.repaint();
@@ -110,6 +111,7 @@ public class Hop {
     public void replay(){
         this.field = new Field(WIDTH, HEIGHT);
         this.axel = new Axel(field, WIDTH / 2, Field.START_ALTITUDE);
+        this.axel.setName(menuPanel.getPlayerName());
         this.gamePanel = new GamePanel(field, axel);
         frame.setContentPane(gamePanel);
         frame.addKeyListener(gamePanel);
@@ -125,17 +127,20 @@ public class Hop {
                     game.round();
                     if (game.over()) {
                         //game.timer.stop();
-                        game.registre();
                         //JOptionPane.showMessageDialog(game.frame, "Game Over!", "Hop!", JOptionPane.INFORMATION_MESSAGE);
                         game.frame.remove(game.gamePanel);
                         game.showEndGame();
                         if(restart){
+                            game.registre();
                             restart = false;
                             Hop.startGame = false;
                             game.replay();
                             game.timer.restart();
                         }
-                        //System.exit(0);
+                        else if(!Hop.playing) {
+                            game.registre();
+                            System.exit(0);
+                        }
                     }
 
 

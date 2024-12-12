@@ -11,7 +11,7 @@ public class EndGamePanel extends JPanel {
     private MusicGame musicGame;
     //private int finalScore;
     
-    public EndGamePanel(){
+    public EndGamePanel(int score, int bestScore){
         ArrayList<String> endGameMusicClip = new ArrayList<>();
         endGameMusicClip.add("assets/audio/MarioDeath.wav");
         this.musicGame = new MusicGame(endGameMusicClip);
@@ -26,6 +26,11 @@ public class EndGamePanel extends JPanel {
                 if (backgroundImage != null) {
                     g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
                 }
+
+                g.setColor(Color.BLACK);
+                g.setFont(new Font("Arial", Font.BOLD, 15));
+                g.drawString("Votre Score : " + score, 120, 350);
+                g.drawString("Meilleur score: " + ((score > bestScore) ? score : bestScore), 120, 380);
             }
         };
         backgroundPanel.setLayout(new BorderLayout());
@@ -41,7 +46,6 @@ public class EndGamePanel extends JPanel {
         replayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                System.out.println("Restart");
                 Hop.restart = true;
             }
         }); 
@@ -52,7 +56,7 @@ public class EndGamePanel extends JPanel {
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0); // Quitte l'application
+                Hop.playing = false; // Quitte l'application
             }
         });
 
