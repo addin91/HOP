@@ -12,12 +12,12 @@ public class Hop {
     public static int speed = 1;
     public static boolean startGame = false;
     public static boolean playing = false;
-    public static boolean replay = false;
+    public static boolean restart = false;
     private int nbround= 1;
 
     private final JFrame frame;
-    private final Field field;
-    private final Axel axel;
+    private Field field;
+    private Axel axel;
     public Timer timer;
     private GamePanel gamePanel;
     private MenuPanel menuPanel;
@@ -107,6 +107,16 @@ public class Hop {
         db.writeToFile();
     }
     
+    public void replay(){
+        this.field = new Field(WIDTH, HEIGHT);
+        this.axel = new Axel(field, WIDTH / 2, Field.START_ALTITUDE);
+        this.gamePanel = new GamePanel(field, axel);
+        frame.setContentPane(gamePanel);
+        frame.addKeyListener(gamePanel);
+        this.frame.requestFocusInWindow();
+        frame.revalidate(); 
+        frame.repaint();
+    }
 
     public static void main(String[] args) {
             Hop game = new Hop();
@@ -114,11 +124,17 @@ public class Hop {
             game.timer = new Timer(DELAY, (ActionEvent e) -> {
                     game.round();
                     if (game.over()) {
-                        game.timer.stop();
+                        //game.timer.stop();
                         game.registre();
                         //JOptionPane.showMessageDialog(game.frame, "Game Over!", "Hop!", JOptionPane.INFORMATION_MESSAGE);
                         game.frame.remove(game.gamePanel);
                         game.showEndGame();
+                        if(restart){
+                            restart = false;
+                            Hop.startGame = false;
+                            game.replay();
+                            game.timer.restart();
+                        }
                         //System.exit(0);
                     }
 

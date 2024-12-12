@@ -63,9 +63,6 @@ public class Field {
         else {  block = new Block(x, y, widthBlock, id); }
         
         ensembleBlocks.add(block);
-        System.out.println("id : " + block.getId());
-        System.out.println("x : " + block.getX());
-        System.out.println();
     }
 
     public boolean libre(int x, int y){

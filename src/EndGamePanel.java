@@ -41,7 +41,8 @@ public class EndGamePanel extends JPanel {
         replayButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //Hop.play();
+                System.out.println("Restart");
+                Hop.restart = true;
             }
         }); 
 

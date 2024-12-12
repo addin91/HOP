@@ -32,15 +32,11 @@ public class Block {
         this.moving = moving;
     }
 
-    public void movingXBlock(){
-        System.out.println(x);
-        
-    }
+
 
     public void effet(Axel a){
         if(kicking){
 
-        System.out.println("Effet");
         a.setVitesseY(30);
         a.setFalling(true);
          
@@ -57,7 +53,6 @@ public class Block {
             };
 
             timer.schedule(task, 1000);
-            System.out.println("Casse");
     
         }
         else if(moving){
