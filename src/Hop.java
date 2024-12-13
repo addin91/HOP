@@ -23,6 +23,7 @@ public class Hop {
     private MenuPanel menuPanel;
     private EndGamePanel endGamePanel;
     private MusicGame musicGame;
+    private MusicGame musicGameFin;
     private Db db;
 
     public Hop() {
@@ -34,6 +35,11 @@ public class Hop {
 
         this.menuPanel = new MenuPanel();
         frame.add(menuPanel);
+
+        ArrayList<String> musicFilesFinDeJeu = new ArrayList<>();
+        musicFilesFinDeJeu.add("assets/audio/MarioDeath.wav");
+        this.musicGameFin = new MusicGame(musicFilesFinDeJeu);
+        //endGamePanel.setMusic(musicGameFin);
 
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
@@ -48,6 +54,7 @@ public class Hop {
         frame.addKeyListener(gamePanel);
 
         this.db = new Db();
+        db.readFromFile();
     }
 
 /*     public void startGame() {
@@ -94,12 +101,20 @@ public class Hop {
     }
 
     public void showEndGame(){
-        musicGame.stop();
         endGamePanel = new EndGamePanel(this.field.getScore(), this.db.bestScore());
+        musicGame.stop(); // Stop la musique actuelle
+        musicGame.close(); // Libère les ressources
+        //endGamePanel.getMusic().playRandom();
+        System.out.println("musique");
         frame.setContentPane(endGamePanel);
         frame.revalidate();
         frame.repaint();
+    
+        // Jouer la musique de fin
+        //System.out.println("Lecture de la musique de fin...");
+        //finMusicGame.playMusic("assets/audio/MarioDeath.wav");
     }
+    
 
     public void registre(){
         db.readFromFile();

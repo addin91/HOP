@@ -8,14 +8,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class EndGamePanel extends JPanel {
-    private MusicGame musicGame;
-    //private int finalScore;
-    
+    private MusicGame music;
     public EndGamePanel(int score, int bestScore){
-        ArrayList<String> endGameMusicClip = new ArrayList<>();
-        endGameMusicClip.add("assets/audio/MarioDeath.wav");
-        this.musicGame = new MusicGame(endGameMusicClip);
-        musicGame.playRandom();
+        
+        System.out.println("musique");
+        //this.music.playRandom();
         setLayout(new BorderLayout());
         // Interface
         JPanel backgroundPanel = new JPanel() {
@@ -66,5 +63,13 @@ public class EndGamePanel extends JPanel {
         // Ajouter les panneaux à la hiérarchie
         backgroundPanel.add(contentPanel, BorderLayout.SOUTH);  // Composants superposés
         add(backgroundPanel, BorderLayout.CENTER);  // Panneau de fond en bas
+    }
+
+    public void setMusic(MusicGame m){
+        this.music = m;
+    }
+
+    public MusicGame getMusic(){
+        return music;
     }
 }
