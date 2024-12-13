@@ -144,7 +144,10 @@ public class Hop {
                         //game.timer.stop();
                         //JOptionPane.showMessageDialog(game.frame, "Game Over!", "Hop!", JOptionPane.INFORMATION_MESSAGE);
                         game.frame.remove(game.gamePanel);
-                        game.showEndGame();
+                        if (game.frame.getContentPane().getComponentCount() == 0) {
+                            game.showEndGame();
+                        }
+                        //game.showEndGame();
                         if(restart){
                             game.registre();
                             restart = false;
