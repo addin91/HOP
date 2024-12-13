@@ -11,7 +11,7 @@ public class EndGamePanel extends JPanel {
     private MusicGame music;
     public EndGamePanel(int score, int bestScore){
         
-        System.out.println("musique");
+        //System.out.println("musique");
         //this.music.playRandom();
         setLayout(new BorderLayout());
         // Interface

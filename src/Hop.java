@@ -29,7 +29,9 @@ public class Hop {
     public Hop() {
         this.frame =  new JFrame("Hop!");
         ArrayList<String> musicFiles = new ArrayList<>();
-        musicFiles.add("assets/audio/OST1.wav");
+        musicFiles.add("assets/audio/Music/OST1.wav");
+        musicFiles.add("assets/audio/Music/OST2.wav");
+        musicFiles.add("assets/audio/Music/OST3.wav");
         this.musicGame = new MusicGame(musicFiles);
         musicGame.playRandom();
 
@@ -37,7 +39,7 @@ public class Hop {
         frame.add(menuPanel);
 
         ArrayList<String> musicFilesFinDeJeu = new ArrayList<>();
-        musicFilesFinDeJeu.add("assets/audio/MarioDeath.wav");
+        musicFilesFinDeJeu.add("assets/audio/SoundEffect/MarioDeath.wav");
         this.musicGameFin = new MusicGame(musicFilesFinDeJeu);
         //endGamePanel.setMusic(musicGameFin);
 
@@ -101,10 +103,11 @@ public class Hop {
     }
 
     public void showEndGame(){
-        endGamePanel = new EndGamePanel(this.field.getScore(), this.db.bestScore());
-        musicGame.stop(); // Stop la musique actuelle
+        musicGame.setPlaying(false);
+        musicGame.stopMusic(); // Stop la musique actuelle
         musicGame.close(); // Libère les ressources
-        //endGamePanel.getMusic().playRandom();
+        musicGameFin.playFin();
+        endGamePanel = new EndGamePanel(this.field.getScore(), this.db.bestScore());
         System.out.println("musique");
         frame.setContentPane(endGamePanel);
         frame.revalidate();
@@ -124,6 +127,9 @@ public class Hop {
     }
     
     public void replay(){
+        musicGameFin.stop();
+        musicGame.startMusic();
+        System.out.println(musicGame+"");
         this.field = new Field(WIDTH, HEIGHT);
         this.axel = new Axel(field, WIDTH / 2, Field.START_ALTITUDE);
         this.axel.setName(menuPanel.getPlayerName());
@@ -141,8 +147,6 @@ public class Hop {
             game.timer = new Timer(DELAY, (ActionEvent e) -> {
                     game.round();
                     if (game.over()) {
-                        //game.timer.stop();
-                        //JOptionPane.showMessageDialog(game.frame, "Game Over!", "Hop!", JOptionPane.INFORMATION_MESSAGE);
                         game.frame.remove(game.gamePanel);
                         if (game.frame.getContentPane().getComponentCount() == 0) {
                             game.showEndGame();

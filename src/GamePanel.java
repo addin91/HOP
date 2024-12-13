@@ -3,7 +3,10 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 
+
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements KeyListener {
@@ -19,13 +22,35 @@ public class GamePanel extends JPanel implements KeyListener {
     private int niveau = 0;
 
     private final Image Game;
+    private MusicGame soundEffect;
 
     private final int lavaHeight = 20;
     private int lavaOffset = 0;
     private final Timer lavaAnimation;
 
+    private Image marioFace;
+    private Image marioRight;
+    private Image marioLeft;
+    private Image marioJump;
+    private Image currentMario;
+
+    private Image blockImage;
+
+    
+    private Effect levelUpEffect;
+
     
     public GamePanel(Field field, Axel axel) {
+        ArrayList<String> soundFiles = new ArrayList<>();
+        soundFiles.add("assets/audio/SoundEffect/Yahoo.wav");
+        this.soundEffect = new MusicGame(soundFiles);
+        this.marioFace = new ImageIcon(getClass().getResource("/assets/images/mario/axel_bas.gif")).getImage();
+        this.marioRight= new ImageIcon(getClass().getResource("/assets/images/mario/axel_droite.gif")).getImage();
+        this.marioLeft = new ImageIcon(getClass().getResource("/assets/images/mario/axel_gauche.gif")).getImage();
+        this.marioJump = new ImageIcon(getClass().getResource("/assets/images/mario/axel_haut.gif")).getImage();
+        this.currentMario = marioFace;
+        this.blockImage = new ImageIcon(getClass().getResource("/assets/images/block.png")).getImage();
+
         this.field = field;
         this.axel = axel;
         this.Game = new ImageIcon(getClass().getResource("/assets/images/InterfaceGame.png")).getImage();
@@ -44,6 +69,13 @@ public class GamePanel extends JPanel implements KeyListener {
         lavaAnimation.start();
     }
 
+    public void triggerLevelUpEffect() {
+        if (levelUpEffect == null || !levelUpEffect.isTriggered()) {
+            levelUpEffect = new LevelUpEffect(axel.getX(), axel.getY());  // Créer un nouvel effet
+        }
+        levelUpEffect.trigger();
+    }
+
     public void paintComponent(Graphics graphics) {
         // Retourne l'ecran
         Graphics2D g = (Graphics2D) graphics;
@@ -54,19 +86,44 @@ public class GamePanel extends JPanel implements KeyListener {
             g.drawImage(Game, 0, 0, getWidth(), getHeight(), this);
         }
         g.rotate(Math.toRadians(180.0), x, y);
+        if (axel.isFalling()) {
+            if (axel.isLeft()) currentMario = marioLeft;
+            else if (axel.isRight()) currentMario = marioRight;
+            else currentMario = marioJump; // Mario saute
+        } else if (axel.isRight()) {
+            currentMario = marioRight; // Mario va à droite
+        } else if (axel.isLeft()) {
+            currentMario = marioLeft; // Mario va à gauche
+        } else {
+            currentMario = marioFace; // Mario est face
+        }
+        //g.rotate(Math.toRadians(180.0), x, y);
         g.setColor ( new Color (0 , 0 , 0 , 255));
         for(Block b: this.field.ensembleBlocks){
             if(b.isKicking())       g.setColor ( new Color (255 , 0 , 0 , 255));
             else if(b.isBreaking()) g.setColor ( new Color (0 , 0 , 255 , 255));
             else if(b.isMoving())   g.setColor ( new Color (0 , 255 , 0 , 255));
-            else                    g.setColor ( new Color (0 , 0 , 0 , 255));
-            g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
+            else                    
+            /*g.setColor(new Color(139, 69, 19)); // Couleur marron classique pour bloc normal
+            g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);  // Dessiner le bloc normal
+
+            // Dessiner des fissures discrètes pour un effet léger
+            g.setColor(new Color(255, 255, 255, 100));  // Fissures plus douces
+            g.setStroke(new BasicStroke(2));  // Fissures plus fines
+            g.drawLine(b.getX() + 10, b.getY() + 5, b.getX() + b.getWidth() - 10, b.getY() + 5); // Fissure subtile horizontale
+            //g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);*/
+            g.drawImage(blockImage, b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT, this);
         }
 
         // Axel
         //g.drawImage(this.axel.getImage(), this.axel.getX(), this.axel.getY(), 40, 40, null);
-        g.setColor(Color.RED);
-        g.fillOval(this.axel.getX()-AXEL_WIDTH/2, this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+        // Dessiner le cercle rouge
+        //g.setColor(Color.RED);
+        //g.fillOval(this.axel.getX()-AXEL_WIDTH/2, this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+
+        // Dessiner l'image de Mario par-dessus le cercle
+        g.drawImage(currentMario, this.axel.getX()-(2*AXEL_WIDTH)+2, this.axel.getY()+AXEL_HEIGHT-3, null);
+
         
         // Score
         g.rotate(Math.toRadians(180.0), x, y);
@@ -82,7 +139,24 @@ public class GamePanel extends JPanel implements KeyListener {
         }
 
         drawLava(g);
-    }
+        if (levelUpEffect != null && !levelUpEffect.isFinished()) {
+            levelUpEffect.update();
+            levelUpEffect.draw(g);
+        }
+}
+public Image resizeImage(Image originalImage, int width, int height) {
+    // Créer une image vide avec les dimensions spécifiées
+    BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+    // Obtenir un Graphics2D pour dessiner l'image redimensionnée
+    Graphics2D g2d = resizedImage.createGraphics();
+    
+    // Redimensionner l'image en la dessinant dans la nouvelle image
+    g2d.drawImage(originalImage, 0, 0, width, height, null);
+    g2d.dispose();  // Libérer les ressources de Graphics2D
+
+    return resizedImage;  // Retourner l'image redimensionnée
+}
 
     private void drawLava(Graphics2D g) {
         // Couleur principale de la lave
@@ -145,6 +219,7 @@ public class GamePanel extends JPanel implements KeyListener {
 
 
     public void updateScoreAndLevel() {
+        int oldNiveau = niveau;
 
             for(Block b  : field.ensembleBlocks){
                 if(b.isMoving()){
@@ -156,34 +231,44 @@ public class GamePanel extends JPanel implements KeyListener {
                 niveau = 6;
                 Hop.speed = 6;
                 this.field.increaseWidthBlock();
+                
             }
             else if(this.field.getScore() >= 4800){
                 niveau = 5;
                 Hop.speed = 5;
                 this.field.increaseWidthBlock();
+                
             }
             else if(this.field.getScore() >= 3200){
                 niveau = 4;
                 Hop.speed = 4;
                 this.field.increaseWidthBlock();
+                
             }
             else if(this.field.getScore() >= 2000){
                 niveau = 3;
                 Hop.speed = 3;
                 this.field.increaseWidthBlock();
+                
             }
             else if(this.field.getScore() >= 800){
                 niveau = 2;
                 Hop.speed = 2;
                 this.field.increaseWidthBlock();
+                
             }
             else if(this.field.getScore() >= 80){
                 niveau = 1;
                 Hop.speed = 1;
                 this.field.increaseWidthBlock();
+                
+ 
             }
-
-        
+        if (niveau != oldNiveau){
+            triggerLevelUpEffect();
+            soundEffect.playSound();
+            levelUpEffect.setTriggered(false);
+        }
 
 
     }

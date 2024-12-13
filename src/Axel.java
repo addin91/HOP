@@ -204,4 +204,16 @@ public class Axel {
     public boolean isFalling() {
         return falling;
     }
+    public boolean isJumping(){
+        return jumping;
+    }
+
+    public boolean isLeft(){
+        return left;
+    }
+
+    public boolean isRight(){
+        return right;
+    }
+    
 }
