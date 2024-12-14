@@ -3,7 +3,6 @@ package src;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Hop {
     public static final int WIDTH = 400;
@@ -32,6 +31,8 @@ public class Hop {
         musicFiles.add("assets/audio/Music/OST1.wav");
         musicFiles.add("assets/audio/Music/OST2.wav");
         musicFiles.add("assets/audio/Music/OST3.wav");
+        musicFiles.add("assets/audio/Music/OST4.wav");
+        musicFiles.add("assets/audio/Music/OST5.wav");
         this.musicGame = new MusicGame(musicFiles);
         musicGame.playRandom();
 

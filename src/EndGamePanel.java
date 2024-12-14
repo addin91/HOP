@@ -1,11 +1,9 @@
 package src;
 
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class EndGamePanel extends JPanel {
     private MusicGame music;

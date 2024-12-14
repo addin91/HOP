@@ -21,8 +21,8 @@ public class LevelUpEffect extends Effect {
             super.trigger();  // Marque l'effet comme déclenché
             // Créer des particules scintillantes autour d'Axel
             for (int i = 0; i < 50; i++) {  // Générer 50 particules
-                int x = axelX + (int)(Math.random() * 40);  // Position autour d'Axel (X)
-                int y = axelY + (int)(Math.random() * 40);  // Position autour d'Axel (Y)
+                int x = axelX + (int)(Math.random() * 150);  // Position autour d'Axel (X)
+                int y = axelY + (int)(Math.random() * 200);  // Position autour d'Axel (Y)
                 int taille = 5 + (int)(Math.random() * 5);  // Taille aléatoire
                 int alpha = 255;  // Opacité maximale
                 int vitesseX = (int)(Math.random() * 10) - 5;  // Vitesse aléatoire sur X

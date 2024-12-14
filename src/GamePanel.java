@@ -5,7 +5,6 @@ import java.awt.*;
 
 
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 
@@ -14,7 +13,7 @@ public class GamePanel extends JPanel implements KeyListener {
     private static final int AXEL_WIDTH = 10;
     private static final int AXEL_HEIGHT = 10;
     public static final int BORDER_RIGHT = 33;
-    public static final int BORDER_LEFT = 37;
+    public static final int BORDER_LEFT = 47;
 
     private final Axel axel;
     private final Field field;
@@ -49,7 +48,9 @@ public class GamePanel extends JPanel implements KeyListener {
         this.marioLeft = new ImageIcon(getClass().getResource("/assets/images/mario/axel_gauche.gif")).getImage();
         this.marioJump = new ImageIcon(getClass().getResource("/assets/images/mario/axel_haut.gif")).getImage();
         this.currentMario = marioFace;
-        this.blockImage = new ImageIcon(getClass().getResource("/assets/images/block.png")).getImage();
+        
+        // Charger l'image comme BufferedImage
+        blockImage = new ImageIcon(getClass().getResource("/assets/images/block.png")).getImage();
 
         this.field = field;
         this.axel = axel;
@@ -71,7 +72,7 @@ public class GamePanel extends JPanel implements KeyListener {
 
     public void triggerLevelUpEffect() {
         if (levelUpEffect == null || !levelUpEffect.isTriggered()) {
-            levelUpEffect = new LevelUpEffect(axel.getX(), axel.getY());  // Créer un nouvel effet
+            levelUpEffect = new LevelUpEffect(120, 180);  // Créer un nouvel effet
         }
         levelUpEffect.trigger();
     }
@@ -100,10 +101,22 @@ public class GamePanel extends JPanel implements KeyListener {
         //g.rotate(Math.toRadians(180.0), x, y);
         g.setColor ( new Color (0 , 0 , 0 , 255));
         for(Block b: this.field.ensembleBlocks){
-            if(b.isKicking())       g.setColor ( new Color (255 , 0 , 0 , 255));
-            else if(b.isBreaking()) g.setColor ( new Color (0 , 0 , 255 , 255));
-            else if(b.isMoving())   g.setColor ( new Color (0 , 255 , 0 , 255));
-            else                    
+            if(b.isKicking()){
+                g.setColor ( new Color (255 , 0 , 0 , 255));
+                g.fillRect(b.getX()-5, b.getY(), b.getWidth(), BLOCK_HEIGHT);
+            }
+            else if(b.isBreaking()){
+                g.setColor ( new Color (0 , 0 , 255 , 255));
+                g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
+            }
+            else if(b.isMoving()){   
+                g.setColor ( new Color (0 , 255 , 0 , 255));
+                g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);
+            }
+            else {
+                g.drawImage(blockImage, b.getX(), b.getY(), b.getX() + b.getWidth(), b.getY() + BLOCK_HEIGHT,
+                    20, 150, blockImage.getWidth(null), BLOCK_HEIGHT, this);
+            }
             /*g.setColor(new Color(139, 69, 19)); // Couleur marron classique pour bloc normal
             g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);  // Dessiner le bloc normal
 
@@ -112,7 +125,7 @@ public class GamePanel extends JPanel implements KeyListener {
             g.setStroke(new BasicStroke(2));  // Fissures plus fines
             g.drawLine(b.getX() + 10, b.getY() + 5, b.getX() + b.getWidth() - 10, b.getY() + 5); // Fissure subtile horizontale
             //g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);*/
-            g.drawImage(blockImage, b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT, this);
+            
         }
 
         // Axel
@@ -129,7 +142,7 @@ public class GamePanel extends JPanel implements KeyListener {
         g.rotate(Math.toRadians(180.0), x, y);
         g.setColor(Color.BLACK);
         g.setFont(new Font("Verdana", Font.ITALIC, 15));
-        g.drawString("Score : " + this.field.getScore(), BORDER_LEFT, 20);
+        g.drawString("Score : " + this.field.getScore(), BORDER_LEFT-10, 20);
         g.drawString("Difficulté: " + niveau, Hop.WIDTH-BORDER_RIGHT-105, 20);
 
         if (!Hop.startGame) {
@@ -144,7 +157,6 @@ public class GamePanel extends JPanel implements KeyListener {
             levelUpEffect.draw(g);
         }
 }
-
     private void drawLava(Graphics2D g) {
         // Couleur principale de la lave
         g.setColor(new Color(255, 40, 0));
