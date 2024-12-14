@@ -25,17 +25,25 @@ public class MenuPanel extends JPanel {
         JPanel contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setOpaque(false);
 
-        JTextField changeName = new JTextField("Player");
+        JTextField changeName = new JTextField("Player", 10);
+        changeName.setFont(new Font ("Verdana", Font.BOLD, 8));
+        changeName.setHorizontalAlignment(JTextField.CENTER);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; // Positionnement dans la colonne 0
+        gbc.gridy = 0; // Positionnement dans la ligne 0
+        gbc.insets = new Insets(10, 10, 10, 10); // Marges autour de l'élément
+        //contentPanel.add(changeName, gbc);
         changeName.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
             }
         });
-        contentPanel.add(changeName);
+        contentPanel.add(changeName,gbc);
 
         // Bouton de démarrage
         JButton startButton = new JButton("Commencer le jeu");
-        startButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        startButton.setBackground(new Color(250,220,0));
+        startButton.setFont(new Font("Verdana", Font.BOLD, 20));
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,7 +53,8 @@ public class MenuPanel extends JPanel {
         });
 
         // Ajouter le bouton au panneau
-        contentPanel.add(startButton);
+        gbc.gridy = 1;
+        contentPanel.add(startButton, gbc);
 
 
 

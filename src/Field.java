@@ -30,7 +30,6 @@ public class Field {
         this.ensembleBlocks.add(b1);
 
         for (int i = 1; i <= 200; i++) {
-
             y += ALTITUDE_GAP;
             addBlock(y, i);
             /*int widthNextBlock = actualBlockWidth + (int)(Math.random() * 41);

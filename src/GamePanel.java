@@ -127,15 +127,15 @@ public class GamePanel extends JPanel implements KeyListener {
         
         // Score
         g.rotate(Math.toRadians(180.0), x, y);
-        g.setColor(Color.RED);
-        g.setFont(new Font("Arial", Font.BOLD, 15));
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Verdana", Font.ITALIC, 15));
         g.drawString("Score : " + this.field.getScore(), BORDER_LEFT, 20);
-        g.drawString("Difficulté: " + niveau, Hop.WIDTH-BORDER_RIGHT-100, 20);
+        g.drawString("Difficulté: " + niveau, Hop.WIDTH-BORDER_RIGHT-105, 20);
 
         if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));
             g.setFont(new Font("Arial", Font.BOLD, 15));
-            g.drawString("Appuyez sur une touche pour commencer !", 40, field.height / 2);
+            g.drawString("Appuyez sur une touche pour commencer !", 34, field.height / 2);
         }
 
         drawLava(g);
@@ -143,19 +143,6 @@ public class GamePanel extends JPanel implements KeyListener {
             levelUpEffect.update();
             levelUpEffect.draw(g);
         }
-}
-public Image resizeImage(Image originalImage, int width, int height) {
-    // Créer une image vide avec les dimensions spécifiées
-    BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-    // Obtenir un Graphics2D pour dessiner l'image redimensionnée
-    Graphics2D g2d = resizedImage.createGraphics();
-    
-    // Redimensionner l'image en la dessinant dans la nouvelle image
-    g2d.drawImage(originalImage, 0, 0, width, height, null);
-    g2d.dispose();  // Libérer les ressources de Graphics2D
-
-    return resizedImage;  // Retourner l'image redimensionnée
 }
 
     private void drawLava(Graphics2D g) {
