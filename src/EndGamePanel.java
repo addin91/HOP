@@ -26,7 +26,8 @@ public class EndGamePanel extends JPanel {
             // Couleurs
             Color scoreColor = new Color(0, 0, 0); 
             Color scorePosition = new Color(0,255,120);
-            Color shadow = new Color(0, 0, 0, 130);
+            Color bestScoreColor = new Color(255, 220, 0);
+            Color shadow = new Color(0, 0, 0, 130); // Ombre semi-transparente
 
             // Positions 
             int xText = 75; 
