@@ -29,22 +29,10 @@ public class Field {
         Block b1 = new Block(this.width / 2 - startBlockWidth / 2, y, startBlockWidth, 0);
         this.ensembleBlocks.add(b1);
 
-        for (int i = 1; i <= 200; i++) {
+        for (int i = 1; i <= 9; i++) {
             y += ALTITUDE_GAP;
             addBlock(y, i);
-            /*int widthNextBlock = actualBlockWidth + (int)(Math.random() * 41);
-            int x = (int)(Math.random() * this.width + 1);
-            if (x + widthNextBlock >= this.width) {
-                x -= widthBlock;
             }
-            Block b = new Block(x, y, widthNextBlock);
-            this.ensembleBlocks.add(b);
-        */}/* 
-        for(Block b : this.ensembleBlocks){
-            System.out.println("id : " + b.getId());
-            System.out.println("moving : " + b.isMoving());
-            System.out.println();
-        }*/
     }
 
     public void addBlock(int y, int id) {
@@ -82,10 +70,13 @@ public class Field {
         if(score > 0){
             List<Block> blockDeplaces = new ArrayList<>();
             for (Block b : this.ensembleBlocks){
-                if (b.getY() + height < 0) blockDeplaces.add(b);
+                if (b.getY() < 0) blockDeplaces.add(b);
                 else b.setY(b.getY() - Hop.speed);
             }
+
             this.ensembleBlocks.removeAll(blockDeplaces);
+            int nbBlock = this.ensembleBlocks.size();
+            if(nbBlock < 10) addBlock(nbBlock*80+40 , this.ensembleBlocks.get(nbBlock-1).getId()+1);
         }
         
         

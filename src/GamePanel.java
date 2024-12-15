@@ -226,37 +226,37 @@ public class GamePanel extends JPanel implements KeyListener {
                 }
             }
 
-            if(this.field.getScore() >= 7200){
+            if(this.field.getScore() >= 7200 && niveau < 6){
                 niveau = 6;
                 Hop.speed = 6;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 4800){
+            else if(this.field.getScore() >= 4800 && niveau < 5){
                 niveau = 5;
                 Hop.speed = 5;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 3200){
+            else if(this.field.getScore() >= 3200 && niveau < 4){
                 niveau = 4;
                 Hop.speed = 4;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 2000){
+            else if(this.field.getScore() >= 2000 && niveau < 3){
                 niveau = 3;
                 Hop.speed = 3;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 800){
+            else if(this.field.getScore() >= 800 && niveau < 2){
                 niveau = 2;
                 Hop.speed = 2;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 80){
+            else if(this.field.getScore() >= 80 && niveau < 1){
                 niveau = 1;
                 Hop.speed = 1;
                 this.field.increaseWidthBlock();
