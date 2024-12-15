@@ -37,7 +37,7 @@ public class Block {
     public void effet(Axel a){
         if(kicking){
 
-        a.setVitesseY(30);
+        a.setVitesseY(25);
         a.setFalling(true);
          
         }
