@@ -2,6 +2,7 @@ package src;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.ArrayList;
 
 public class Hop {
@@ -12,55 +13,59 @@ public class Hop {
     public static boolean startGame = false;
     public static boolean playing = false;
     public static boolean restart = false;
-    private int nbround= 1;
 
     private final JFrame frame;
     private Field field;
     private Axel axel;
-    public Timer timer;
+    private Timer timer;
     private ImageIcon logo;
     private GamePanel gamePanel;
     private MenuPanel menuPanel;
     private EndGamePanel endGamePanel;
     private MusicGame musicGame;
     private MusicGame musicGameFin;
+    private ArrayList<String> musicFiles;
+    private ArrayList<String> musicFilesFinDeJeu;
     private Db db;
+    private int nbRound;
 
     public Hop() {
         this.frame =  new JFrame("Super Mario Hop!");
         // Logo 
         this.logo = new ImageIcon(getClass().getResource("/assets/images/HopLogo.png"));
-        frame.setIconImage(logo.getImage());
-        ArrayList<String> musicFiles = new ArrayList<>();
-        musicFiles.add("assets/audio/Music/OST1.wav");
-        musicFiles.add("assets/audio/Music/OST2.wav");
-        musicFiles.add("assets/audio/Music/OST3.wav");
-        musicFiles.add("assets/audio/Music/OST4.wav");
-        musicFiles.add("assets/audio/Music/OST5.wav");
+        this.frame.setIconImage(logo.getImage());
+        this.musicFiles = new ArrayList<>();
+        this.musicFiles.add("assets/audio/Music/OST1.wav");
+        this.musicFiles.add("assets/audio/Music/OST2.wav");
+        this.musicFiles.add("assets/audio/Music/OST3.wav");
+        this.musicFiles.add("assets/audio/Music/OST4.wav");
+        this.musicFiles.add("assets/audio/Music/OST5.wav");
         this.musicGame = new MusicGame(musicFiles);
-        musicGame.playRandom();
+        this.musicGame.playRandom();
 
         this.menuPanel = new MenuPanel();
-        frame.add(menuPanel);
+        this.frame.add(menuPanel);
 
-        ArrayList<String> musicFilesFinDeJeu = new ArrayList<>();
-        musicFilesFinDeJeu.add("assets/audio/SoundEffect/MarioDeath.wav");
+        this.musicFilesFinDeJeu = new ArrayList<>();
+        this.musicFilesFinDeJeu.add("assets/audio/SoundEffect/MarioDeath.wav");
         this.musicGameFin = new MusicGame(musicFilesFinDeJeu);
 
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setVisible(true);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
+        this.frame.setSize(WIDTH, HEIGHT);
+        this.frame.setVisible(true);
+        this.frame.setResizable(false);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setLocationRelativeTo(null);
 
         this.field = new Field(WIDTH, HEIGHT);
         this.axel = new Axel(field, WIDTH / 2, Field.START_ALTITUDE);
         this.gamePanel = new GamePanel(field, axel);
-        frame.add(gamePanel);
-        frame.addKeyListener(gamePanel);
+        this.frame.add(this.gamePanel);
+        this.frame.addKeyListener(this.gamePanel);
 
         this.db = new Db();
-        db.readFromFile();
+        this.db.readFromFile();
+
+        this.nbRound = 1;
     }
 
     public JPanel getGamePanel() {
@@ -68,8 +73,7 @@ public class Hop {
     }
 
     public void round() {
-        if (playing && nbround>0) {
-            this.nbround--;
+        if (playing && nbRound==1) {;
             this.frame.remove(menuPanel);
             this.axel.setName(menuPanel.getPlayerName());
             frame.add(gamePanel);   
@@ -89,7 +93,7 @@ public class Hop {
     }
 
     public boolean over() {
-        return !this.axel.getSurviving() || axel.getY() < 0;
+        return !this.axel.getSurviving();
     }
 
     public void showEndGame(){
@@ -97,7 +101,7 @@ public class Hop {
         musicGame.stopMusic();
         musicGame.close();
         musicGameFin.playFin();
-        endGamePanel = new EndGamePanel(this.field.getScore(), this.db.bestScore());
+        endGamePanel = new EndGamePanel(this.field.getScore(), this.db.bestScore(), this.db.rank(this.field.getScore()));
         frame.setContentPane(endGamePanel);
         frame.revalidate();
         frame.repaint();
@@ -138,6 +142,7 @@ public class Hop {
                         if(restart){
                             game.registre();
                             restart = false;
+                            game.nbRound++;
                             Hop.startGame = false;
                             game.replay();
                             game.timer.restart();

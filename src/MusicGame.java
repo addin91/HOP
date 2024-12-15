@@ -13,7 +13,7 @@ public class MusicGame {
     private ArrayList<String> remainingMusicFiles;
     private boolean isPlaying;
 
-    public MusicGame(ArrayList<String> musicFiles) {
+    public MusicGame(final ArrayList<String> musicFiles) {
         this.musicFiles = new ArrayList<>(musicFiles);
         this.remainingMusicFiles = new ArrayList<>(musicFiles); // Initialiser la liste des morceaux restants
         this.random = new Random();
@@ -62,15 +62,6 @@ public class MusicGame {
         isPlaying = false; // Désactiver la musique
         stop();
     }
-
-    public boolean getPlaying(){
-        return isPlaying;
-    }
-
-    public void setPlaying(boolean a){
-        isPlaying = a;
-    }
-
     public void playFin() {
         if (musicFiles == null || musicFiles.isEmpty()) {
             System.err.println("Erreur : aucun fichier audio disponible.");
@@ -117,4 +108,16 @@ public class MusicGame {
             e.printStackTrace();  // Gérer les erreurs
         }
     }
+
+
+    // GETTERS 
+    public boolean getPlaying(){
+        return isPlaying;
+    }
+    
+    // SETTERS
+    public void setPlaying(boolean a){
+        isPlaying = a;
+    }
+
 }

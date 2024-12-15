@@ -14,7 +14,7 @@ public class Block {
 
     private int coefMoving;
 
-    public Block(int x, int y, int width, int id) {
+    public Block(final int x, final int y, final int width, final int id) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -25,7 +25,7 @@ public class Block {
         this.coefMoving = 4;
         this.habiter = false;
     }
-    public Block(int x, int y, int width, int id, boolean kicking, boolean breaking, boolean moving){
+    public Block(final int x, final int y, final int width, final int id, final boolean kicking, final boolean breaking, final boolean moving){
         this(x, y, width, id);
         this.kicking = kicking;
         this.breaking = breaking;
@@ -33,16 +33,12 @@ public class Block {
     }
 
 
-
     public void effet(Axel a){
         if(kicking){
-
-        a.setVitesseY(30);
-        a.setFalling(true);
-         
+            a.setVitesseY(30);
+            a.setFalling(true);
         }
         else if(breaking){
-
             Block b = this;
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
@@ -51,9 +47,7 @@ public class Block {
                     a.setFalling(true);
                 }
             };
-
             timer.schedule(task, 1000);
-    
         }
         else if(moving){
             if(x < GamePanel.BORDER_RIGHT) coefMoving = 1;
@@ -65,6 +59,8 @@ public class Block {
         }
     }
 
+
+    // GETTERS
     public int getX() {
         return x;
     }
@@ -73,6 +69,10 @@ public class Block {
     }
     public int getId() {
         return id;
+    }
+
+    public int getWidth() {
+        return width;
     }
     public boolean isKicking() {
         return kicking;
@@ -84,6 +84,8 @@ public class Block {
     public boolean isMoving() {
         return moving;
     }
+
+    // SETTERS
     public void setX(int x){
          this.x = x;
     }
@@ -93,8 +95,5 @@ public class Block {
     }
     public void setHabiter(boolean habiter) {
         this.habiter = habiter;
-    }
-    public int getWidth() {
-        return width;
     }
 }

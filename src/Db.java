@@ -57,6 +57,15 @@ public class Db {
         else return this.ranking.get(1).getScore();
     }
 
+    public int rank(int score) {
+        for(int i : ranking.keySet()){
+            if(score >= ranking.get(i).getScore()){
+                return i;
+            }
+        }
+        return ranking.size()+1;
+    }
+
 
     // Trier les personnes par score décroissant
     public void sortRanking() {
@@ -77,15 +86,17 @@ public class Db {
     }
 }
 
-
+// represente le joueur
 class Player {
     String name;
     int score;
 
-    public Player(String name, int score) {
+    public Player(final String name, final int score) {
         this.name = name;
         this.score = score;
     }
+
+    // GETTERS
 
     public String getName() {
         return name;

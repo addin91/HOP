@@ -2,8 +2,6 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-
-
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
@@ -17,7 +15,6 @@ public class GamePanel extends JPanel implements KeyListener {
 
     private final Axel axel;
     private final Field field;
-    //private int score = 0;
     private int niveau = 0;
 
     private final Image Game;
@@ -38,9 +35,11 @@ public class GamePanel extends JPanel implements KeyListener {
     
     private Effect levelUpEffect;
 
+    private ArrayList<String> soundFiles;
+
     
-    public GamePanel(Field field, Axel axel) {
-        ArrayList<String> soundFiles = new ArrayList<>();
+    public GamePanel(final Field field, final Axel axel) {
+        this.soundFiles = new ArrayList<>();
         soundFiles.add("assets/audio/SoundEffect/Yahoo.wav");
         this.soundEffect = new MusicGame(soundFiles);
         this.marioFace = new ImageIcon(getClass().getResource("/assets/images/mario/axel_bas.gif")).getImage();
@@ -50,7 +49,7 @@ public class GamePanel extends JPanel implements KeyListener {
         this.currentMario = marioFace;
         
         // Charger l'image comme BufferedImage
-        blockImage = new ImageIcon(getClass().getResource("/assets/images/block.png")).getImage();
+        this.blockImage = new ImageIcon(getClass().getResource("/assets/images/block.png")).getImage();
 
         this.field = field;
         this.axel = axel;
@@ -156,53 +155,6 @@ public class GamePanel extends JPanel implements KeyListener {
         }
     }
 
-
-    public void keyPressed(KeyEvent e){
-        switch (e.getKeyCode()) {
-            // Plonge
-            case KeyEvent.VK_DOWN:
-                this.axel.setDiving(true);
-                break;
-            // Saute
-            case KeyEvent.VK_UP:
-                this.axel.setJumping(true);
-                Hop.startGame = true;
-                break;
-            // Gauche
-            case KeyEvent.VK_LEFT:
-                this.axel.setLeft(true);
-                break;
-            // Droite
-            case KeyEvent.VK_RIGHT:
-                this.axel.setRight(true);
-                break;
-            default: break;
-        }
-    }
-
-    public void keyReleased(KeyEvent e){
-        switch (e.getKeyCode()) {
-            // Plonge
-            case KeyEvent.VK_DOWN:
-                this.axel.setDiving(false);
-                break;
-            // Saute
-            case KeyEvent.VK_UP:
-                this.axel.setJumping(false);
-                break;
-            // Gauche
-            case KeyEvent.VK_LEFT:
-                this.axel.setLeft(false);
-                break;
-            // Droite
-            case KeyEvent.VK_RIGHT:
-                this.axel.setRight(false);
-                break;
-            default: break;
-        }
-    }
-
-
     public void updateScoreAndLevel() {
         int oldNiveau = niveau;
 
@@ -258,7 +210,53 @@ public class GamePanel extends JPanel implements KeyListener {
 
     }
 
-                  
+               
+
+    public void keyPressed(KeyEvent e){
+        switch (e.getKeyCode()) {
+            // Plonge
+            case KeyEvent.VK_DOWN:
+                this.axel.setDiving(true);
+                break;
+            // Saute
+            case KeyEvent.VK_UP:
+                this.axel.setJumping(true);
+                Hop.startGame = true;
+                break;
+            // Gauche
+            case KeyEvent.VK_LEFT:
+                this.axel.setLeft(true);
+                break;
+            // Droite
+            case KeyEvent.VK_RIGHT:
+                this.axel.setRight(true);
+                break;
+            default: break;
+        }
+    }
+
+    public void keyReleased(KeyEvent e){
+        switch (e.getKeyCode()) {
+            // Plonge
+            case KeyEvent.VK_DOWN:
+                this.axel.setDiving(false);
+                break;
+            // Saute
+            case KeyEvent.VK_UP:
+                this.axel.setJumping(false);
+                break;
+            // Gauche
+            case KeyEvent.VK_LEFT:
+                this.axel.setLeft(false);
+                break;
+            // Droite
+            case KeyEvent.VK_RIGHT:
+                this.axel.setRight(false);
+                break;
+            default: break;
+        }
+    }
+   
     public void keyTyped(KeyEvent e){}
 
 }

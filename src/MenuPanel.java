@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuPanel extends JPanel {
-    private String name;
+    private String namePlayer;
     public MenuPanel() {
         setLayout(new BorderLayout());
 
@@ -25,19 +25,14 @@ public class MenuPanel extends JPanel {
         JPanel contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setOpaque(false);
 
-        JTextField changeName = new JTextField("Player", 10);
+        JTextField changeName = new JTextField("Player", 20);
         changeName.setFont(new Font ("Verdana", Font.BOLD, 8));
         changeName.setHorizontalAlignment(JTextField.CENTER);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0; // Positionnement dans la colonne 0
         gbc.gridy = 0; // Positionnement dans la ligne 0
         gbc.insets = new Insets(10, 10, 10, 10); // Marges autour de l'élément
-        //contentPanel.add(changeName, gbc);
-        changeName.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-            }
-        });
+        
         contentPanel.add(changeName,gbc);
 
         // Bouton de démarrage
@@ -47,7 +42,7 @@ public class MenuPanel extends JPanel {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                name = changeName.getText();
+                namePlayer = changeName.getText();
                 Hop.playing = true;
             }
         });
@@ -57,18 +52,16 @@ public class MenuPanel extends JPanel {
         contentPanel.add(startButton, gbc);
 
 
-
-
-
         // Ajouter les panneaux à la hiérarchie
         backgroundPanel.add(contentPanel, BorderLayout.CENTER); // Composants superposés
         add(backgroundPanel, BorderLayout.CENTER);
     }
 
+
+    // GETTERS
+
     public String getPlayerName() {
-        return this.name;
+        return this.namePlayer;
     }
-    public void setPlayerName(String namePlayer){
-        this.name = namePlayer;
-    }
+
 }

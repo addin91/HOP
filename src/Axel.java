@@ -23,21 +23,13 @@ public class Axel {
 
     private final Field field;
 
-    private int score;
-    //private Block lastBlock;
 
-    //private Image image;
-
-    public Axel(Field f, int x, int y) {
+    public Axel(final Field f, final int x, final int y) {
         this.field = f;
         this.x = x;
         this.y = y;
         this.surviving = true;
         this.name = "Player";
-
-
-        this.score= 0;
-
     }
 
 
@@ -66,6 +58,8 @@ public class Axel {
             this.y -= Hop.speed;
         }
 
+
+        if(y < 10) surviving = false;
         
 
     }
@@ -150,7 +144,6 @@ public class Axel {
     }
 
     // GETTERS
-
     public boolean getSurviving(){
         return this.surviving;
     }
@@ -159,9 +152,6 @@ public class Axel {
     }
     public int getY() {
         return y;
-    }
-    public int getScore() {
-        return score;
     }
     public String getName() {
         return name;

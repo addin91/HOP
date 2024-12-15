@@ -7,7 +7,7 @@ public abstract class Effect {
     protected boolean finished;  // Si l'effet est terminé
     protected boolean triggered;
 
-    public Effect(int duration) {
+    public Effect(final int duration) {
         this.duration = duration;
         this.finished = false;
         this.triggered = false;
@@ -22,6 +22,9 @@ public abstract class Effect {
     public abstract void update();  // Mise à jour de l'effet
     public abstract void draw(Graphics g);  // Dessin de l'effet
 
+
+    // GETTERS
+
     public boolean isFinished() {
         return finished;
     }
@@ -30,6 +33,8 @@ public abstract class Effect {
         return triggered;
     }
 
+    // SETTERS
+    
     public void setTriggered(boolean a){
         this.triggered = a;
     }

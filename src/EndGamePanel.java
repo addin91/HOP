@@ -6,8 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EndGamePanel extends JPanel {
-    private MusicGame music;
-    public EndGamePanel(int score, int bestScore){
+    public EndGamePanel(final int score, final int bestScore, int rank){
         
  
         setLayout(new BorderLayout());
@@ -28,17 +27,17 @@ public class EndGamePanel extends JPanel {
                 Color bestScoreColor = new Color(255,220,0);
                 Color shadow = new Color(0,0,0,130);
                 // Position 
-                int xScore = 105;
+                int xScore = 75;
                 int yScore = 350;
                 int xBestScore = 75;
                 int yBestScore = 380;
                 // Ombres 
                 g.setColor(shadow);
-                g.drawString("Votre Score: " + score, xScore + 1, yScore + 1);
+                g.drawString("Votre Score: " + score + " ("+rank+" ème)", xScore + 1, yScore + 1);
                 g.drawString("Meilleur score: " + ((score > bestScore) ? score : bestScore), xBestScore + 2, yBestScore + 2);
                 // Votre Score 
                 g.setColor(scoreColor);
-                g.drawString("Votre Score: " + score, 105, 350);
+                g.drawString("Votre Score: " + score + " ("+rank+" ème)", xScore, yScore);
                 // Meilleur score
                 g.setColor(bestScoreColor);
                 g.drawString("Meilleur score: " + ((score > bestScore) ? score : bestScore), 75, 380);
@@ -79,11 +78,4 @@ public class EndGamePanel extends JPanel {
         add(backgroundPanel, BorderLayout.CENTER);  // Panneau de fond en bas
     }
 
-    public void setMusic(MusicGame m){
-        this.music = m;
-    }
-
-    public MusicGame getMusic(){
-        return music;
-    }
 }

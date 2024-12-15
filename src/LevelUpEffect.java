@@ -7,11 +7,11 @@ public class LevelUpEffect extends Effect {
     private ArrayList<int[]> particles;
     private int axelX, axelY;
 
-    public LevelUpEffect(int axelX, int axelY) {
+    public LevelUpEffect(final int axelX, final int axelY) {
         super(30);  // Durée de l'effet en frames
         this.axelX = axelX;
         this.axelY = axelY;
-        particles = new ArrayList<>();
+        this.particles = new ArrayList<>();
     }
 
     @Override
