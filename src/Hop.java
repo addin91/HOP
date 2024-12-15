@@ -109,18 +109,13 @@ public class Hop {
 
     public void showEndGame(){
         musicGame.setPlaying(false);
-        musicGame.stopMusic(); // Stop la musique actuelle
-        musicGame.close(); // Libère les ressources
+        musicGame.stopMusic();
+        musicGame.close();
         musicGameFin.playFin();
         endGamePanel = new EndGamePanel(this.field.getScore(), this.db.bestScore());
-        System.out.println("musique");
         frame.setContentPane(endGamePanel);
         frame.revalidate();
         frame.repaint();
-    
-        // Jouer la musique de fin
-        //System.out.println("Lecture de la musique de fin...");
-        //finMusicGame.playMusic("assets/audio/MarioDeath.wav");
     }
     
 
@@ -134,7 +129,6 @@ public class Hop {
     public void replay(){
         musicGameFin.stop();
         musicGame.startMusic();
-        System.out.println(musicGame+"");
         this.field = new Field(WIDTH, HEIGHT);
         this.axel = new Axel(field, WIDTH / 2, Field.START_ALTITUDE);
         this.axel.setName(menuPanel.getPlayerName());
@@ -156,7 +150,6 @@ public class Hop {
                         if (game.frame.getContentPane().getComponentCount() == 0) {
                             game.showEndGame();
                         }
-                        //game.showEndGame();
                         if(restart){
                             game.registre();
                             restart = false;
