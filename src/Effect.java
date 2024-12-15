@@ -35,7 +35,7 @@ public abstract class Effect {
 
     // SETTERS
     
-    public void setTriggered(boolean a){
+    public void setTriggered(final boolean a){
         this.triggered = a;
     }
 }

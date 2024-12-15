@@ -21,7 +21,9 @@ public class Db {
     }
 
 
-    // Lire le fichier JSON et retourner une Map<Integer, Player>
+    /**
+     * la méthode readFromFile lit le fichier JSON (base donnée) et enregistre le contenu dans ranking
+     */
     public void readFromFile() {
         try (FileReader reader = new FileReader(filename)) {
             // Définir le type exact de la Map à désérialiser
@@ -33,7 +35,10 @@ public class Db {
         }
     }
 
-    // Écrire dans le fichier JSON
+    
+    /**
+     * la méthode writeToFile écrit le contenu de ranking dans le fichier JSON (base donnée)
+     */
     public void writeToFile() {
         try (FileWriter writer = new FileWriter(filename)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -43,20 +48,33 @@ public class Db {
         }
     }
 
-    // Ajouter une nouvelle personne dans le classement
-    public void addPerson(String name, int score) {
+    /**
+     * la méthode addPerson ajoute une nouvelle personne dans le classement
+     * @param name le nom du joueur
+     * @param score le score du joueur
+     */
+    public void addPlayer(String name, int score) {
         Player newPlayer = new Player(name, score);
         // Trouver un ID disponible
         int newId = (this.ranking.size() > 0 ? ranking.size() + 1 : 1);
         ranking.putIfAbsent(newId, newPlayer);
     }
 
-    // Trouver le meilleur score enregistrer
+    /**
+     * la méthode bestScore renvoi le meilleur score enregistrer
+     * @return le meilleur score enrigistrer sinon 0
+     */
     public int bestScore() {
         if(this.ranking.isEmpty()) return 0;
         else return this.ranking.get(1).getScore();
     }
 
+    
+    /**
+     * la méthode renvoi le classement pour le score donné
+     * @param score le score durant la parti
+     * @return le rang dans le classement
+     */
     public int rank(int score) {
         for(int i : ranking.keySet()){
             if(score >= ranking.get(i).getScore()){
@@ -67,7 +85,10 @@ public class Db {
     }
 
 
-    // Trier les personnes par score décroissant
+
+    /**
+     * la méthode sortRanking trie les joueurs par score décroissant dans ranking
+     */
     public void sortRanking() {
         // Convertir la Map en une liste pour trier
         List<Map.Entry<Integer, Player>> list = new ArrayList<>(ranking.entrySet());
@@ -86,7 +107,7 @@ public class Db {
     }
 }
 
-// represente le joueur
+// Represente le joueur
 class Player {
     String name;
     int score;

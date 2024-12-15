@@ -67,10 +67,10 @@ public class Hop {
         this.nbRound = 1;
     }
 
-    public JPanel getGamePanel() {
-        return gamePanel;
-    }
 
+    /**
+     * la méthode round rafraichit le jeu toutes les 40 ms
+     */
     public void round() {
         if (playing && nbRound==1) {;
             this.frame.remove(menuPanel);
@@ -91,10 +91,17 @@ public class Hop {
         frame.repaint();
     }
 
+    /**
+     * la méthode over teste si le personnage est toujours vivant ou mort
+     * @return un booléen, "Vrai" si le personnage est mort sinon "Faux"
+     */
     public boolean over() {
         return !this.axel.getSurviving();
     }
 
+    /**
+     * la méthode showEndGame affiche la fin de jeu en cas de perte
+     */
     public void showEndGame(){
         musicGame.setPlaying(false);
         musicGame.stopMusic();
@@ -106,14 +113,19 @@ public class Hop {
         frame.repaint();
     }
     
-
+    /**
+     * la méthode registre enregistre les donnés de la partie dans la base de donnée
+     */
     public void registre(){
         db.readFromFile();
-        db.addPerson(axel.getName(), field.getScore());
+        db.addPlayer(axel.getName(), field.getScore());
         db.sortRanking();
         db.writeToFile();
     }
     
+    /**
+     * la méthode replay relance le jeu si le joueur souhaite rejouer
+     */
     public void replay(){
         musicGameFin.stop();
         musicGame.startMusic();
@@ -127,6 +139,7 @@ public class Hop {
         frame.revalidate(); 
         frame.repaint();
     }
+
 
     public static void main(String[] args) {
             Hop game = new Hop();

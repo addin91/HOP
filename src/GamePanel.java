@@ -15,13 +15,13 @@ public class GamePanel extends JPanel implements KeyListener {
 
     private final Axel axel;
     private final Field field;
-    private int niveau = 0;
+    private int level;
 
     private final Image Game;
     private MusicGame soundEffect;
 
-    private final int lavaHeight = 20;
-    private int lavaOffset = 0;
+    private final int lavaHeight;
+    private int lavaOffset;
     private final Timer lavaAnimation;
 
     private Image marioFace;
@@ -54,8 +54,11 @@ public class GamePanel extends JPanel implements KeyListener {
         this.field = field;
         this.axel = axel;
         this.Game = new ImageIcon(getClass().getResource("/assets/images/InterfaceGame.png")).getImage();
+        this.lavaHeight = 20;
+        this.lavaOffset = 0;
+        this.level = 0;
 
-        setPreferredSize(new Dimension(field.width, field.height));
+        setPreferredSize(new Dimension(Hop.WIDTH, Hop.HEIGHT));
         addKeyListener(this);
         setFocusable(true);
 
@@ -99,7 +102,7 @@ public class GamePanel extends JPanel implements KeyListener {
         }
         //g.rotate(Math.toRadians(180.0), x, y);
         g.setColor ( new Color (0 , 0 , 0 , 255));
-        for(Block b: this.field.ensembleBlocks){
+        for(Block b: this.field.getBlockSet()){
             if(b.isKicking()){
                 g.setColor ( new Color (255 , 0 , 0 , 255));
                 g.fillRect(b.getX(), b.getY()+15, b.getWidth(), BLOCK_HEIGHT);
@@ -128,12 +131,12 @@ public class GamePanel extends JPanel implements KeyListener {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Verdana", Font.ITALIC, 15));
         g.drawString("Score : " + this.field.getScore(), BORDER_LEFT-10, 20);
-        g.drawString("Difficulté: " + niveau, Hop.WIDTH-BORDER_RIGHT-105, 20);
+        g.drawString("Difficulté: " + level, Hop.WIDTH-BORDER_RIGHT-105, 20);
 
         if (!Hop.startGame) {
             g.setColor(new Color(0,0,0,180));
             g.setFont(new Font("Arial", Font.BOLD, 15));
-            g.drawString("Appuyez sur une touche pour commencer !", 34, field.height / 2);
+            g.drawString("Appuyez sur une touche pour commencer !", 34, Hop.HEIGHT / 2);
         }
 
         drawLava(g);
@@ -156,52 +159,52 @@ public class GamePanel extends JPanel implements KeyListener {
     }
 
     public void updateScoreAndLevel() {
-        int oldNiveau = niveau;
+        int oldNiveau = level;
 
-            for(Block b  : field.ensembleBlocks){
+            for(Block b  : field.getBlockSet()){
                 if(b.isMoving()){
-                    b.effet(axel);
+                    b.effect(axel);
                 }
             }
 
-            if(this.field.getScore() >= 7200 && niveau < 6){
-                niveau = 6;
+            if(this.field.getScore() >= 7200 && level < 6){
+                level = 6;
                 Hop.speed = 6;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 4800 && niveau < 5){
-                niveau = 5;
+            else if(this.field.getScore() >= 4800 && level < 5){
+                level = 5;
                 Hop.speed = 5;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 3200 && niveau < 4){
-                niveau = 4;
+            else if(this.field.getScore() >= 3200 && level < 4){
+                level = 4;
                 Hop.speed = 4;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 2000 && niveau < 3){
-                niveau = 3;
+            else if(this.field.getScore() >= 2000 && level < 3){
+                level = 3;
                 Hop.speed = 3;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 800 && niveau < 2){
-                niveau = 2;
+            else if(this.field.getScore() >= 800 && level < 2){
+                level = 2;
                 Hop.speed = 2;
                 this.field.increaseWidthBlock();
                 
             }
-            else if(this.field.getScore() >= 80 && niveau < 1){
-                niveau = 1;
+            else if(this.field.getScore() >= 80 && level < 1){
+                level = 1;
                 Hop.speed = 1;
                 this.field.increaseWidthBlock();
                 
  
             }
-        if (niveau != oldNiveau){
+        if (level != oldNiveau){
             triggerLevelUpEffect();
             soundEffect.playSound();
             levelUpEffect.setTriggered(false);

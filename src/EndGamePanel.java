@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EndGamePanel extends JPanel {
-    public EndGamePanel(final int score, final int bestScore, int rank){
+    public EndGamePanel(final int score, final int bestScore, final int rank){
         
  
         setLayout(new BorderLayout());

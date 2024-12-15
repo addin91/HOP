@@ -1,5 +1,6 @@
 package src;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,9 +11,9 @@ public class Block {
     private final int width;
 
     private boolean kicking, breaking, moving;
-    private boolean habiter;
+    private boolean up;
 
-    private int coefMoving;
+    private int coefMoving; // Coefficient de mouvement
 
     public Block(final int x, final int y, final int width, final int id) {
         this.x = x;
@@ -23,7 +24,7 @@ public class Block {
         this.breaking = false;
         this.moving = false;
         this.coefMoving = 4;
-        this.habiter = false;
+        this.up = false;
     }
     public Block(final int x, final int y, final int width, final int id, final boolean kicking, final boolean breaking, final boolean moving){
         this(x, y, width, id);
@@ -32,10 +33,16 @@ public class Block {
         this.moving = moving;
     }
 
-
-    public void effet(Axel a){
+    /**
+     * la méthode effect gère les effets des blocks spéciaux
+     * Super-saut si kikcing vrai
+     * Block temporaire si breaking vrai
+     * Block en mouvement si moving vrai
+     * @param a le personnage  Axel
+     */
+    public void effect(Axel a){
         if(kicking){
-            a.setVitesseY(25);
+            a.setSpeedY(25);
             a.setFalling(true);
         }
         else if(breaking){
@@ -43,7 +50,9 @@ public class Block {
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
                 public void run() {
-                    a.getField().ensembleBlocks.remove(b);
+                    List<Block> newBlockSet = a.getField().getBlockSet();
+                    newBlockSet.remove(b);
+                    a.getField().setBlockSet(newBlockSet);
                     a.setFalling(true);
                 }
             };
@@ -53,7 +62,7 @@ public class Block {
             if(x < GamePanel.BORDER_RIGHT) coefMoving = 1;
             else if (x > Hop.WIDTH - width - GamePanel.BORDER_LEFT) coefMoving = -1;
             x+=coefMoving;
-            if(a.getVitesseY() == 0 && a.isFalling() == false && this.habiter){
+            if(a.getSpeedY() == 0 && a.isFalling() == false && this.up){
                 a.setX(a.getX() + coefMoving);
             }
         }
@@ -86,14 +95,14 @@ public class Block {
     }
 
     // SETTERS
-    public void setX(int x){
+    public void setX(final int x){
          this.x = x;
     }
 
-    public void setY(int y){
+    public void setY(final int y){
         this.y = y;
     }
-    public void setHabiter(boolean habiter) {
-        this.habiter = habiter;
+    public void setUp(final boolean up) {
+        this.up = up;
     }
 }

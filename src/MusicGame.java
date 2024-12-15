@@ -116,8 +116,8 @@ public class MusicGame {
     }
     
     // SETTERS
-    public void setPlaying(boolean a){
-        isPlaying = a;
+    public void setPlaying(final boolean a){
+        this.isPlaying = a;
     }
 
 }
