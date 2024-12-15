@@ -17,7 +17,7 @@ public class Field {
     public Field(final int width, final int height) {
         this.width = width;
         this.height = height;
-        this.minBlockWidth = 50;
+        this.minBlockWidth = 60;
         this.maxBlockWidth = 100;
         this.score = 0;
         initialiseEnsembleBlocks();

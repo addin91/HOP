@@ -102,7 +102,7 @@ public class GamePanel extends JPanel implements KeyListener {
         for(Block b: this.field.ensembleBlocks){
             if(b.isKicking()){
                 g.setColor ( new Color (255 , 0 , 0 , 255));
-                g.fillRect(b.getX()-5, b.getY(), b.getWidth(), BLOCK_HEIGHT);
+                g.fillRect(b.getX(), b.getY()+15, b.getWidth(), BLOCK_HEIGHT);
             }
             else if(b.isBreaking()){
                 g.setColor ( new Color (0 , 0 , 255 , 255));
