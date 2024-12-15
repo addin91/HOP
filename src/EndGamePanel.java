@@ -19,28 +19,39 @@ public class EndGamePanel extends JPanel {
                 if (backgroundImage != null) {
                     g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
                 }
-                // Texte
-                Font font = new Font("Verdana", Font.BOLD,20);
-                g.setFont(font);
-                // Couleurs
-                Color scoreColor = new Color(0, 0, 0);
-                Color bestScoreColor = new Color(255,220,0);
-                Color shadow = new Color(0,0,0,130);
-                // Position 
-                int xScore = 75;
-                int yScore = 350;
-                int xBestScore = 75;
-                int yBestScore = 380;
-                // Ombres 
-                g.setColor(shadow);
-                g.drawString("Votre Score: " + score + " ("+rank+" ème)", xScore + 1, yScore + 1);
-                g.drawString("Meilleur score: " + ((score > bestScore) ? score : bestScore), xBestScore + 2, yBestScore + 2);
-                // Votre Score 
-                g.setColor(scoreColor);
-                g.drawString("Votre Score: " + score + " ("+rank+" ème)", xScore, yScore);
-                // Meilleur score
-                g.setColor(bestScoreColor);
-                g.drawString("Meilleur score: " + ((score > bestScore) ? score : bestScore), 75, 380);
+                // Définir la police
+            Font font = new Font("Verdana", Font.BOLD, 20);
+            g.setFont(font);
+
+            // Couleurs
+            Color scoreColor = new Color(0, 0, 0); // Couleur pour "Votre Score" et "Votre position"
+            Color scorePosition = new Color(0,255,120);
+            Color bestScoreColor = new Color(255, 220, 0); // Couleur pour "Meilleur score"
+            Color shadow = new Color(0, 0, 0, 130); // Ombre semi-transparente
+
+            // Positions 
+            int xText = 75; 
+            int yScore = 350; 
+            int yPosition = yScore + 30; 
+            int yBestScore = yPosition + 30;
+
+            // Ombres
+            g.setColor(shadow);
+            g.drawString("Votre Score: " + score , xText + 33, yScore + 1);
+            g.drawString("Votre position: " + rank + (rank == 1 ? " er" : " ème"), xText, yPosition + 1);
+            g.drawString("Meilleur score: " + Math.max(score, bestScore), xText + 1, yBestScore + 1);
+
+            // Texte principal : Votre Score
+            g.setColor(scoreColor);
+            g.drawString("Votre Score: " + score , xText+32, yScore);
+
+            // Texte principal : Votre position
+            g.setColor(scorePosition);
+            g.drawString("Votre position: " + rank + (rank == 1 ? " er" : " ème"), xText, yPosition);
+
+            // Texte principal : Meilleur score
+            g.setColor(bestScoreColor);
+            g.drawString("Meilleur score: " + Math.max(score, bestScore), xText, yBestScore);
             }
         };
         backgroundPanel.setLayout(new BorderLayout());
