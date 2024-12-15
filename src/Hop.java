@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+/**
+ * Classe gérant le structure du jeu
+ */
 public class Hop {
     public static final int WIDTH = 400;
     public static final int HEIGHT = 600;
@@ -28,6 +31,10 @@ public class Hop {
     private Db db;
     private int nbRound;
 
+    /**
+     * Constructeur de la classe Hop.
+     * Initialise les données du jeu.
+     */
     public Hop() {
         this.frame =  new JFrame("Super Mario Hop!");
         // Logo 

@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+/**
+ * Classe représentant les blocks
+ */
 public class Block {
     private int id;
     private int x;
@@ -15,6 +19,10 @@ public class Block {
 
     private int coefMoving; // Coefficient de mouvement
 
+    /**
+     * Constructeur de la classe Block.
+     * Initialise le block.
+     */
     public Block(final int x, final int y, final int width, final int id) {
         this.x = x;
         this.y = y;

@@ -10,11 +10,18 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 
+/**
+ * Classe gérant la base de donnée
+ */
 public class Db {
 
     private Map<Integer, Player> ranking;
     private String filename;
 
+    /**
+     * Constructeur de la classe Db.
+     * Initialise le système de base de donné.
+     */
     public Db(){
         this.ranking = new LinkedHashMap<Integer, Player>();
         this.filename = "db.json";

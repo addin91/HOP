@@ -1,5 +1,9 @@
 package src;
 
+
+/**
+ * Classe représentant le personnage
+ */
 public class Axel {
     public static final double MAX_FALL_SPEED = -20;
     public static final double JUMP_SPEED = 18;
@@ -20,7 +24,10 @@ public class Axel {
 
     private final Field field;
 
-
+    /**
+     * Constructeur de la classe Axel.
+     * Initialise le personnage.
+     */
     public Axel(final Field f, final int x, final int y) {
         this.field = f;
         this.x = x;

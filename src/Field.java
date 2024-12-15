@@ -3,7 +3,9 @@ package src;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Classe représentant le volcan
+ */
 public class Field {
     public static final int ALTITUDE_GAP = 80;
     public static final int START_ALTITUDE = 40;
@@ -14,6 +16,10 @@ public class Field {
     private int maxBlockWidth;
     private int score;
 
+    /**
+     * Constructeur de la classe Field.
+     * Initialise l'espace.
+     */
     public Field(final int width, final int height) {
         this.width = width;
         this.height = height;
