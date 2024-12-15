@@ -6,28 +6,64 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Classe représentant la musique du jeu.
+ * Cette classe permet de lire une liste de musiques, gérer la lecture,
+ * arrêter la musique, etc...
+ */
 public class MusicGame {
+    
+    /**
+     * Un objet {@link Clip} représentant le clip audio en cours de lecture.
+     */
     private Clip clip;
+
+    /**
+     * Une liste de chaîne de caractères représentant les fichiers musicaux
+     * en chemin d'accès.
+     */
     private ArrayList<String> musicFiles;
+
+    /**
+     * Un objet {@link Random} représentant le générateur de nombres aléatoires, 
+     * pour sélectionner un fichier audio de manière aléatoire aléatoire.
+     */
     private Random random;
+
+    /**
+     * Une liste de chaîne de caracères représentant les fichiers restants avant de
+     * réinstialiser la séléction de fichier audio, afin de s'assurer que chaque fichier audio est joué.
+     */
     private ArrayList<String> remainingMusicFiles;
+
+    /**
+     * Un booléen indiquant si la musique est actuellement en cours de lecture
+     * 'true' si la musique est active, sinon 'false'.
+     */
     private boolean isPlaying;
 
+    /**
+     * Construteur de la classe MusicGame
+     * Initialise la liste des fichiers musicaux, la liste des morceaux restants, etc...
+     * @param musicFiles
+     */
     public MusicGame(final ArrayList<String> musicFiles) {
         this.musicFiles = new ArrayList<>(musicFiles);
-        this.remainingMusicFiles = new ArrayList<>(musicFiles); // Initialiser la liste des morceaux restants
+        this.remainingMusicFiles = new ArrayList<>(musicFiles);
         this.random = new Random();
         this.isPlaying = true;
     }
 
+    /**
+     * Méthode jouant un morceau audio séléctionné de manière aléatoire de la liste
+     * des morceaux restants.
+     * Si tous les morceaux ont été joués, la liste est réinstialisée.
+     */
     public void playRandom() {
         if (remainingMusicFiles.isEmpty()) {
-            // Réinitialiser la liste des morceaux restants si tous ont été joués
             remainingMusicFiles = new ArrayList<>(musicFiles);
         }
-
-        stop(); // Arrêter l'ancienne musique si elle est en cours
-
+        stop();
         String selectedFile = remainingMusicFiles.remove(random.nextInt(remainingMusicFiles.size()));
         try {
             File audioFile = new File(selectedFile);
@@ -35,67 +71,80 @@ public class MusicGame {
             clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.setFramePosition(0);
-
-            // Ajouter un listener pour détecter la fin de la musique
             clip.addLineListener(event -> {
                 if (event.getType() == LineEvent.Type.STOP && isPlaying ) {
-                    //isPlaying = false;
                     clip.stop();
                     clip.close();
                     playRandom();
-                     // Passer à une autre musique
                 }
             });
-
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Méthode qui met à jour l'état de la musique en cours et joue
+     * des morceaux de manière aléatoire.
+     */
     public void startMusic() {
-        isPlaying = true; // Activer la musique
+        isPlaying = true;
         playRandom();
     }
 
+    /**
+     * Méthode permettant d'arrêter la lecture de la musique.
+     */
     public void stopMusic() {
-        isPlaying = false; // Désactiver la musique
+        isPlaying = false;
         stop();
     }
+
+    /**
+     * Méthode permettant de jouer la musique de fin de jeu.
+     */
     public void playFin() {
         if (musicFiles == null || musicFiles.isEmpty()) {
             System.err.println("Erreur : aucun fichier audio disponible.");
             return;
         }
-    
-        stop(); // Arrêter la musique précédente si elle est en cours
-    
+        stop();
         try {
-            String filePath = musicFiles.get(0); // Récupérer le seul fichier audio
+            String filePath = musicFiles.get(0);
             File audioFile = new File(filePath);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
             clip = AudioSystem.getClip();
             clip.open(audioStream);
-            clip.setFramePosition(0); // Démarrer au début
-            clip.start(); // Jouer la musique
+            clip.setFramePosition(0);
+            clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
     
-
+    /**
+     * Méthode permettant d'arrêter la lecture du morceau actuellement joué.
+     */
     public void stop() {
         if (clip != null && clip.isRunning()) {
             clip.stop();
         }
     }
 
+    /**
+     * Méthode permettant de libérer les ressources associées au morceau 
+     * actuellement joué. 
+     */
     public void close() {
         if (clip != null) {
             clip.close();
         }
     }
 
+    /**
+     * Méthode permettant de jouer un effet sonore spécifique.
+     */
     public void playSound(){
         try {
             String sound = musicFiles.get(0); // Charger le fichier son
@@ -111,13 +160,22 @@ public class MusicGame {
 
 
     // GETTERS 
+
+    /**
+     * Méthode renvoyant l'état de la lecture de musique.
+     * @return 'true' si la musique est active, sinon 'false'.
+     */
     public boolean getPlaying(){
         return isPlaying;
     }
     
     // SETTERS
+
+    /**
+     * Méthode mettant à jour l'état de la lecture de musique.
+     * @param a 'true' pour activer la musique, sinon 'false' pour désactiver.
+     */
     public void setPlaying(boolean a){
         isPlaying = a;
     }
-
 }
