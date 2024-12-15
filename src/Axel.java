@@ -38,16 +38,8 @@ public class Axel {
 
         this.score= 0;
 
-        /*try {
-            this.image = ImageIO.read(getClass().getResource("/axel1.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
-    /*public Image getImage(){
-        return this.image;
-    }*/
 
     public void update() { 
         computeMove();
@@ -127,27 +119,6 @@ public class Axel {
         this.falling = true;
     }
 
-/* 
-    public boolean libre(int x, int y){
-        for(Block b : this.field.ensembleBlocks){
-            int xB1 = b.getX();
-            int xB2 = xB1 + b.getWidth();
-            int yB = b.getY();
-            if(x >= xB1 && x <= xB2 && y == yB) {
-                this.score = Math.max(score, b.getId()*80);
-                b.effet(this);
-                return false;
-            
-            }
-        }
-        return true;
-    }
-
-    public void effet(){
-
-    }
-
-    */
 
     // SETTERS
     public void setVitesseY(double vitesseY) {

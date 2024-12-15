@@ -46,7 +46,6 @@ public class Hop {
         ArrayList<String> musicFilesFinDeJeu = new ArrayList<>();
         musicFilesFinDeJeu.add("assets/audio/SoundEffect/MarioDeath.wav");
         this.musicGameFin = new MusicGame(musicFilesFinDeJeu);
-        //endGamePanel.setMusic(musicGameFin);
 
         frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
@@ -64,16 +63,6 @@ public class Hop {
         db.readFromFile();
     }
 
-/*     public void startGame() {
-        this.frame.remove(menuPanel);
-        this.frame.removeKeyListener(menuPanel);
-
-        frame.add(gamePanel);   
-        frame.addKeyListener(gamePanel);
-        frame.revalidate(); 
-        frame.repaint();
-    }
-*/
     public JPanel getGamePanel() {
         return gamePanel;
     }
@@ -83,10 +72,6 @@ public class Hop {
             this.nbround--;
             this.frame.remove(menuPanel);
             this.axel.setName(menuPanel.getPlayerName());
-            //this.frame.removeKeyListener(menuPanel);
-//        }
-        //if(nbround==0) 
-//        {
             frame.add(gamePanel);   
             frame.addKeyListener(gamePanel);
             this.frame.requestFocusInWindow();

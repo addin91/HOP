@@ -117,24 +117,10 @@ public class GamePanel extends JPanel implements KeyListener {
                 g.drawImage(blockImage, b.getX(), b.getY(), b.getX() + b.getWidth(), b.getY() + BLOCK_HEIGHT,
                     20, 150, blockImage.getWidth(null), BLOCK_HEIGHT, this);
             }
-            /*g.setColor(new Color(139, 69, 19)); // Couleur marron classique pour bloc normal
-            g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);  // Dessiner le bloc normal
-
-            // Dessiner des fissures discrètes pour un effet léger
-            g.setColor(new Color(255, 255, 255, 100));  // Fissures plus douces
-            g.setStroke(new BasicStroke(2));  // Fissures plus fines
-            g.drawLine(b.getX() + 10, b.getY() + 5, b.getX() + b.getWidth() - 10, b.getY() + 5); // Fissure subtile horizontale
-            //g.fillRect(b.getX(), b.getY(), b.getWidth(), BLOCK_HEIGHT);*/
+            
             
         }
 
-        // Axel
-        //g.drawImage(this.axel.getImage(), this.axel.getX(), this.axel.getY(), 40, 40, null);
-        // Dessiner le cercle rouge
-        //g.setColor(Color.RED);
-        //g.fillOval(this.axel.getX()-AXEL_WIDTH/2, this.axel.getY()+AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
-
-        // Dessiner l'image de Mario par-dessus le cercle
         g.drawImage(currentMario, this.axel.getX()-(2*AXEL_WIDTH)+2, this.axel.getY()+AXEL_HEIGHT-3, null);
 
         

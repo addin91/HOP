@@ -9,7 +9,6 @@ public class Field {
     public static final int START_ALTITUDE = 40;
 
     public final int width, height;
-    //private int bottom, top; // bottom and top altitude
     public List<Block> ensembleBlocks = new ArrayList<Block>();
     private int minBlockWidth;
     private int maxBlockWidth;
@@ -36,20 +35,32 @@ public class Field {
     }
 
     public void addBlock(int y, int id) {
-        
-        int widthBlock = minBlockWidth + (int)(Math.random() * ((maxBlockWidth - minBlockWidth) + 1));; // Randomize block width
 
+        System.out.println("Id : " + id);
+        System.out.println("Score : "+score);
+        System.out.println("Y : " + y);
+        try {
+            
+        System.out.println("Diff y : "+(y-ensembleBlocks.get(id-1).getY()));
+        } catch (Exception e) {
+            System.out.println("Diff y : "+(y-ensembleBlocks.get(8).getY()));
+        }
+        int widthBlock = minBlockWidth + (int)(Math.random() * ((maxBlockWidth - minBlockWidth) + 1));; // Randomize block width
+        System.out.println("Width : " + widthBlock);
         int range = (( Hop.WIDTH - GamePanel.BORDER_LEFT - widthBlock) - (GamePanel.BORDER_RIGHT));
      	int x = (int) ((range * Math.random())+GamePanel.BORDER_RIGHT);
 
         double alea = Math.random();
+        System.out.println("Alea : "+alea);
         Block block;
-        if(y >= 2000 && alea < 0.15 ) {  block = new Block(x, y, widthBlock, id, true, false, false); }
-        else if(y >= 3200 && alea < 0.25) {  block = new Block(x, y, widthBlock, id, false, true, false); }
-        else if(y >= 4800 && alea < 0.5) {  block = new Block(x, y, widthBlock, id, false, false, true); }
+        if(score >= 2000 && alea < 0.1 ) {  block = new Block(x, y, widthBlock, id, true, false, false); }
+        else if(score >= 3200 && alea < 0.25) {  block = new Block(x, y, widthBlock, id, false, true, false); }
+        else if(score >= 4800 && alea < 0.5) {  block = new Block(x, y, widthBlock, id, false, false, true); }
         else {  block = new Block(x, y, widthBlock, id); }
         
         ensembleBlocks.add(block);
+
+        System.out.println();
     }
 
     public boolean libre(int x, int y){
@@ -76,23 +87,11 @@ public class Field {
 
             this.ensembleBlocks.removeAll(blockDeplaces);
             int nbBlock = this.ensembleBlocks.size();
-            if(nbBlock < 10) addBlock(nbBlock*80+40 , this.ensembleBlocks.get(nbBlock-1).getId()+1);
+            if(nbBlock < 10) addBlock(this.ensembleBlocks.get(nbBlock-1).getY()+ALTITUDE_GAP , this.ensembleBlocks.get(nbBlock-1).getId()+1);
         }
         
         
-        // L'erreur des blocks qui se rajoute au debut vient du code ci-dessous
-        /* 
-        if (this.top + ALTITUDE_GAP <= height) {
-            this.top += ALTITUDE_GAP;
-            int widthNextBlock = 30 + (int)(Math.random() * 41);
-            int x = (int)(Math.random() * this.width + 1);
-            if (x + widthNextBlock >= this.width) {
-                x -= widthNextBlock;
-            }
-            Block b = new Block(x, this.top, widthNextBlock);
-            this.ensembleBlocks.add(b);
-        }
-        */
+       
      }
 
      public void increaseWidthBlock(){
