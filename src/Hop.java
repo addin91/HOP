@@ -18,6 +18,7 @@ public class Hop {
     private Field field;
     private Axel axel;
     public Timer timer;
+    private ImageIcon logo;
     private GamePanel gamePanel;
     private MenuPanel menuPanel;
     private EndGamePanel endGamePanel;
@@ -26,7 +27,10 @@ public class Hop {
     private Db db;
 
     public Hop() {
-        this.frame =  new JFrame("Hop!");
+        this.frame =  new JFrame("Super Mario Hop!");
+        // Logo 
+        this.logo = new ImageIcon(getClass().getResource("/assets/images/HopLogo.png"));
+        frame.setIconImage(logo.getImage());
         ArrayList<String> musicFiles = new ArrayList<>();
         musicFiles.add("assets/audio/Music/OST1.wav");
         musicFiles.add("assets/audio/Music/OST2.wav");
