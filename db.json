@@ -1,123 +1,274 @@
 {
   "1": {
-    "name": "Player",
-    "score": 7840
+    "name": "abdelrahmen",
+    "score": 9600
   },
   "2": {
-    "name": "Player",
-    "score": 5040
+    "name": "addin",
+    "score": 8480
   },
   "3": {
-    "name": "Player",
-    "score": 1040
+    "name": "addin",
+    "score": 7920
   },
   "4": {
-    "name": "Player",
-    "score": 720
+    "name": "Jr",
+    "score": 7440
   },
   "5": {
-    "name": "Player",
-    "score": 560
+    "name": "Jr",
+    "score": 7360
   },
   "6": {
-    "name": "Player",
-    "score": 560
+    "name": "Abdelrahmen",
+    "score": 7040
   },
   "7": {
     "name": "Player",
-    "score": 480
+    "score": 6560
   },
   "8": {
-    "name": "Player",
-    "score": 480
+    "name": "addin",
+    "score": 6480
   },
   "9": {
     "name": "Player",
-    "score": 480
+    "score": 6240
   },
   "10": {
     "name": "Player",
-    "score": 320
+    "score": 6160
   },
   "11": {
     "name": "Player",
-    "score": 320
+    "score": 5840
   },
   "12": {
-    "name": "Player",
-    "score": 160
+    "name": "abdelrahmen",
+    "score": 5760
   },
   "13": {
-    "name": "Player",
-    "score": 160
+    "name": "addin",
+    "score": 5440
   },
   "14": {
-    "name": "John",
-    "score": 95
+    "name": "just Ahmed",
+    "score": 5200
   },
   "15": {
-    "name": "Alice",
-    "score": 88
+    "name": "addin",
+    "score": 5040
   },
   "16": {
     "name": "Player",
-    "score": 80
+    "score": 4880
   },
   "17": {
     "name": "Player",
-    "score": 80
+    "score": 4000
   },
   "18": {
-    "name": "Player",
-    "score": 80
+    "name": "addin",
+    "score": 3120
   },
   "19": {
-    "name": "Player",
-    "score": 80
+    "name": "addin",
+    "score": 3120
   },
   "20": {
     "name": "Player",
-    "score": 80
+    "score": 2960
   },
   "21": {
-    "name": "Player",
-    "score": 80
+    "name": "abderrahim",
+    "score": 2800
   },
   "22": {
     "name": "Player",
-    "score": 0
+    "score": 2640
   },
   "23": {
     "name": "Player",
-    "score": 0
+    "score": 2080
   },
   "24": {
     "name": "Player",
-    "score": 0
+    "score": 2000
   },
   "25": {
     "name": "Player",
-    "score": 0
+    "score": 2000
   },
   "26": {
     "name": "Player",
-    "score": 0
+    "score": 1760
   },
   "27": {
     "name": "Player",
-    "score": 0
+    "score": 1600
   },
   "28": {
-    "name": "Player",
-    "score": 0
+    "name": "abderrahim",
+    "score": 1600
   },
   "29": {
     "name": "Player",
-    "score": 0
+    "score": 1520
   },
   "30": {
+    "name": "Player",
+    "score": 1520
+  },
+  "31": {
+    "name": "Player",
+    "score": 1440
+  },
+  "32": {
+    "name": "addin",
+    "score": 1440
+  },
+  "33": {
+    "name": "abderrahim",
+    "score": 1280
+  },
+  "34": {
+    "name": "Player",
+    "score": 1200
+  },
+  "35": {
+    "name": "Player",
+    "score": 960
+  },
+  "36": {
+    "name": "Player",
+    "score": 960
+  },
+  "37": {
+    "name": "Player",
+    "score": 960
+  },
+  "38": {
+    "name": "abderrahim",
+    "score": 960
+  },
+  "39": {
+    "name": "Jr",
+    "score": 880
+  },
+  "40": {
+    "name": "Player",
+    "score": 720
+  },
+  "41": {
+    "name": "Player",
+    "score": 720
+  },
+  "42": {
+    "name": "Player",
+    "score": 720
+  },
+  "43": {
+    "name": "Player",
+    "score": 720
+  },
+  "44": {
+    "name": "Player",
+    "score": 640
+  },
+  "45": {
+    "name": "addin",
+    "score": 640
+  },
+  "46": {
+    "name": "abdelrahmen",
+    "score": 480
+  },
+  "47": {
+    "name": "Jr",
+    "score": 480
+  },
+  "48": {
+    "name": "Player",
+    "score": 480
+  },
+  "49": {
+    "name": "Player",
+    "score": 400
+  },
+  "50": {
+    "name": "Player",
+    "score": 400
+  },
+  "51": {
+    "name": "adel",
+    "score": 320
+  },
+  "52": {
+    "name": "adel",
+    "score": 240
+  },
+  "53": {
+    "name": "abderrahim",
+    "score": 240
+  },
+  "54": {
+    "name": "abderrahim",
+    "score": 240
+  },
+  "55": {
+    "name": "adel",
+    "score": 160
+  },
+  "56": {
+    "name": "Player",
+    "score": 160
+  },
+  "57": {
+    "name": "abdelrahmen",
+    "score": 160
+  },
+  "58": {
+    "name": "Player",
+    "score": 160
+  },
+  "59": {
+    "name": "adel",
+    "score": 80
+  },
+  "60": {
+    "name": "Player",
+    "score": 80
+  },
+  "61": {
+    "name": "Player",
+    "score": 80
+  },
+  "62": {
+    "name": "Player",
+    "score": 80
+  },
+  "63": {
+    "name": "Player",
+    "score": 80
+  },
+  "64": {
+    "name": "Player",
+    "score": 80
+  },
+  "65": {
+    "name": "Player",
+    "score": 80
+  },
+  "66": {
+    "name": "abdelrahmen",
+    "score": 80
+  },
+  "67": {
+    "name": "adel",
+    "score": 0
+  },
+  "68": {
     "name": "Player",
     "score": 0
   }
 }
->>>>>>> 800c55a0560168153be2f1ddb5de59e6b9ad0266

@@ -6,54 +6,117 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 
+/**
+ * Classe représentant le panneau du jeu.
+ * Cette classe gère les emplacements et les éléments graphiqes, les interactions clavier, 
+ * l'affichage des effets...
+ */
 public class GamePanel extends JPanel implements KeyListener {
-    private static final int BLOCK_HEIGHT = 10;
-    private static final int AXEL_WIDTH = 10;
-    private static final int AXEL_HEIGHT = 10;
-    public static final int BORDER_RIGHT = 33;
-    public static final int BORDER_LEFT = 47;
 
+    // Constantes
+    private static final int BLOCK_HEIGHT = 10; // La longueur d'un block.
+    private static final int AXEL_WIDTH = 10; // La largeur d'axel.
+    private static final int AXEL_HEIGHT = 10; // La longueur d'axel.
+    public static final int BORDER_RIGHT = 33; // La bordure droite.
+    public static final int BORDER_LEFT = 47; // La bordure gauche.
+    private final int lavaHeight; // Hauteur de la lave.
+    private int lavaOffset; // Décalage de la lave. 
+    private final Timer lavaAnimation; // Timer pour animer la lave
+
+    /**
+     * Un objet {@link Axel} représentant le prersonnage principal du jeu.
+     */
     private final Axel axel;
+
+    /**
+     * Un objet {@link Field} représentant le terrain de jeu.
+     */
     private final Field field;
-    private int level;
 
+    /**
+     * Un entier représentant le niveau de difficulté du jeu.
+     */
+     private int level;
+
+    /**
+     * Un objet {@link Image} représentant l'image de fond du jeu.
+     */
     private final Image Game;
-    private MusicGame soundEffect;
 
-    private final int lavaHeight;
-    private int lavaOffset;
-    private final Timer lavaAnimation;
-
+    /**
+     * Un objet {@link Image} représentant l'image d'axel par défaut.
+     */
     private Image marioFace;
+
+    /**
+     * Un objet {@link Image} représentant l'image d'axel quand il se dirige
+     * vers la droite.
+     */
     private Image marioRight;
+
+    /**
+     * Un objet {@link Image} représentant l'image d'axel quand il se dirige
+     * vers la gauche.
+     */
     private Image marioLeft;
+
+    /**
+     * Un objet {@link Image} représentant l'image d'axel quand il saute.
+     */
     private Image marioJump;
+
+    /**
+     * Un objet {@link Image} représentant l'image actuelle d'axel dans le jeu.
+     */
     private Image currentMario;
 
-    private Image blockImage;
+    /**
+     * Un objet {@link Image} représentant l'image des blocks par défaut.
+     */
+    private Image blockImage; 
 
-    
-    private Effect levelUpEffect;
+    /**
+     * Un objet {@link MusicGame} représentant les effets sonores du jeu.
+     */
+    private MusicGame soundEffect;
 
+    /**
+     * Une liste de chaînes de caractères représentant les fichiers sonores du jeu.
+     */
     private ArrayList<String> soundFiles;
 
+    /**
+     * Un objet {@link Effect} représentant l'effet de "Level Up".
+     */
+    private Effect levelUpEffect;
     
+    /**
+     * Constructeur de la classe GamePanel.
+     * Initialise le panneau du jeu avec le terrain et le personnage.
+     * @param field Un objet {@link Field} représentant le terrain de jeu.
+     * @param axel Un objet {@link Axel} représentant le joueur principal du jeu.
+     */
     public GamePanel(final Field field, final Axel axel) {
-        this.soundFiles = new ArrayList<>();
-        soundFiles.add("assets/audio/SoundEffect/Yahoo.wav");
-        this.soundEffect = new MusicGame(soundFiles);
+        
+        // Charger les images du personnages
         this.marioFace = new ImageIcon(getClass().getResource("/assets/images/mario/axel_bas.gif")).getImage();
         this.marioRight= new ImageIcon(getClass().getResource("/assets/images/mario/axel_droite.gif")).getImage();
         this.marioLeft = new ImageIcon(getClass().getResource("/assets/images/mario/axel_gauche.gif")).getImage();
         this.marioJump = new ImageIcon(getClass().getResource("/assets/images/mario/axel_haut.gif")).getImage();
-        this.currentMario = marioFace;
+        this.currentMario = this.marioFace;
         
-        // Charger l'image comme BufferedImage
+        // Charger l'image des blocks et du jeu
         this.blockImage = new ImageIcon(getClass().getResource("/assets/images/block.png")).getImage();
+        this.Game = new ImageIcon(getClass().getResource("/assets/images/InterfaceGame.png")).getImage();
 
+        // Charger les effets sonores du jeu
+        this.soundFiles = new ArrayList<>();
+        this.soundFiles.add("assets/audio/SoundEffect/Yahoo.wav");
+        this.soundEffect = new MusicGame(soundFiles);
+        
+        // Initialiser le terrain, le personnage et le niveau
         this.field = field;
         this.axel = axel;
-        this.Game = new ImageIcon(getClass().getResource("/assets/images/InterfaceGame.png")).getImage();
         this.lavaHeight = 20;
         this.lavaOffset = 0;
         this.level = 0;
@@ -62,45 +125,46 @@ public class GamePanel extends JPanel implements KeyListener {
         addKeyListener(this);
         setFocusable(true);
 
-        lavaAnimation = new Timer(50, e -> {
-            lavaOffset += 3; // Faire défiler les vagues
-            if (lavaOffset >= 50) {
-                lavaOffset = 0; // Réinitialiser après un cycle
+        // Configurer la lave
+        this.lavaAnimation = new Timer(50, e -> {
+            this.lavaOffset += 3;
+            if (this.lavaOffset >= 50) {
+                this.lavaOffset = 0;
             }
             repaint();
         });
         lavaAnimation.start();
     }
 
+    /**
+     * Méthode déclenchant l'effet de "Level Up".
+     * initialise l'effet si aucun effet n'est actif ou s'il n'a pas été déclenché.
+     */
     public void triggerLevelUpEffect() {
         if (levelUpEffect == null || !levelUpEffect.isTriggered()) {
-            levelUpEffect = new LevelUpEffect(120, 180);  // Créer un nouvel effet
+            levelUpEffect = new LevelUpEffect(120, 180);
         }
         levelUpEffect.trigger();
     }
 
+    /**
+     * Méthode dessinant le contenu du panneau, y compris le terrain, le personnage , les blocs,
+     * le score, la lave...
+     * @param graphics Un objet {@link Graphics} utilisé pour dessiner les éléments.
+     */
     public void paintComponent(Graphics graphics) {
-        // Retourne l'ecran
         Graphics2D g = (Graphics2D) graphics;
         int x = this.getWidth() / 2;
         int y = this.getHeight() / 2;
         super.paintComponent(g);
+
+        // Dessine l'image du fond
         if (Game != null) {
             g.drawImage(Game, 0, 0, getWidth(), getHeight(), this);
         }
-        g.rotate(Math.toRadians(180.0), x, y);
-        if (axel.isFalling()) {
-            if (axel.isLeft()) currentMario = marioLeft;
-            else if (axel.isRight()) currentMario = marioRight;
-            else currentMario = marioJump; // Mario saute
-        } else if (axel.isRight()) {
-            currentMario = marioRight; // Mario va à droite
-        } else if (axel.isLeft()) {
-            currentMario = marioLeft; // Mario va à gauche
-        } else {
-            currentMario = marioFace; // Mario est face
-        }
-        //g.rotate(Math.toRadians(180.0), x, y);
+        g.rotate(Math.toRadians(180.0), x, y); 
+        
+        // Dessine les blocs 
         g.setColor ( new Color (0 , 0 , 0 , 255));
         for(Block b: this.field.getBlockSet()){
             if(b.isKicking()){
@@ -119,12 +183,20 @@ public class GamePanel extends JPanel implements KeyListener {
                 g.drawImage(blockImage, b.getX(), b.getY(), b.getX() + b.getWidth(), b.getY() + BLOCK_HEIGHT,
                     20, 150, blockImage.getWidth(null), BLOCK_HEIGHT, this);
             }
-            
-            
         }
-
+        // Dessine le personnage axel
+        if (axel.isFalling()) {
+            if (axel.isLeft()) currentMario = marioLeft;
+            else if (axel.isRight()) currentMario = marioRight;
+            else currentMario = marioJump;
+        } else if (axel.isRight()) {
+            currentMario = marioRight;
+        } else if (axel.isLeft()) {
+            currentMario = marioLeft;
+        } else {
+            currentMario = marioFace;
+        }
         g.drawImage(currentMario, this.axel.getX()-(2*AXEL_WIDTH)+2, this.axel.getY()+AXEL_HEIGHT-3, null);
-
         
         // Score
         g.rotate(Math.toRadians(180.0), x, y);
@@ -139,12 +211,18 @@ public class GamePanel extends JPanel implements KeyListener {
             g.drawString("Appuyez sur une touche pour commencer !", 34, Hop.HEIGHT / 2);
         }
 
+        // Dessine la lave
         drawLava(g);
         if (levelUpEffect != null && !levelUpEffect.isFinished()) {
             levelUpEffect.update();
             levelUpEffect.draw(g);
         }
 }
+
+    /**
+     * Méthode dessinant la lave en bas de l'écran avec une animation.
+     * @param g Un objet {@link Graphics} utilisé pour dessiner la lave.
+     */
     private void drawLava(Graphics2D g) {
         // Couleur principale de la lave
         g.setColor(new Color(255, 40, 0));
@@ -158,6 +236,10 @@ public class GamePanel extends JPanel implements KeyListener {
         }
     }
 
+    /**
+     * Méthode mettant à jour le score et la difficulté du jeu.
+     * Déclenche un effet "Level Up" lorsque le niveau augmente.
+     */
     public void updateScoreAndLevel() {
         int oldNiveau = level;
 
@@ -171,50 +253,43 @@ public class GamePanel extends JPanel implements KeyListener {
                 level = 6;
                 Hop.speed = 6;
                 this.field.increaseWidthBlock();
-                
             }
             else if(this.field.getScore() >= 4800 && level < 5){
                 level = 5;
                 Hop.speed = 5;
                 this.field.increaseWidthBlock();
-                
             }
             else if(this.field.getScore() >= 3200 && level < 4){
                 level = 4;
                 Hop.speed = 4;
                 this.field.increaseWidthBlock();
-                
             }
             else if(this.field.getScore() >= 2000 && level < 3){
                 level = 3;
                 Hop.speed = 3;
                 this.field.increaseWidthBlock();
-                
             }
             else if(this.field.getScore() >= 800 && level < 2){
                 level = 2;
                 Hop.speed = 2;
                 this.field.increaseWidthBlock();
-                
             }
             else if(this.field.getScore() >= 80 && level < 1){
                 level = 1;
                 Hop.speed = 1;
                 this.field.increaseWidthBlock();
-                
- 
             }
         if (level != oldNiveau){
             triggerLevelUpEffect();
             soundEffect.playSound();
             levelUpEffect.setTriggered(false);
         }
-
-
     }
 
-               
-
+    /**
+     * Méthode gérant le mouvement lorsqu'une touche est appuyé.
+     * @param e Un objet {@link KeyEvent} utilisé pour déterminer les touches.
+     */
     public void keyPressed(KeyEvent e){
         switch (e.getKeyCode()) {
             // Plonge
@@ -238,6 +313,10 @@ public class GamePanel extends JPanel implements KeyListener {
         }
     }
 
+    /**
+     * Méthode gérant le mouvement lorsqu'une touche est relachée.
+     * @param e Un objet {@link KeyEvent} utilisé pour déterminer les touches.
+     */
     public void keyReleased(KeyEvent e){
         switch (e.getKeyCode()) {
             // Plonge
@@ -261,5 +340,4 @@ public class GamePanel extends JPanel implements KeyListener {
     }
    
     public void keyTyped(KeyEvent e){}
-
 }

@@ -1,29 +1,21 @@
-JFLAGS = -g
+JFLAGS = -cp
 JC = javac
 J = java
-.SUFFIXES: .java .class
-.java.class:
-		$(JC) $(JFLAGS) $*.java
+LIB = lib/gson-2.8.9.jar
 
-# L'ensemble des fichiers java
-CLASSES = \
-        src/Block.java \
-        src/Field.java \
-        src/Axel.java \
-        src/GamePanel.java \
-		src/MenuPanel.java \
-		src/Db.java \
-        src/Hop.java 
-
-# Avec "make" coompile les fichiers
+# Avec "make" coompile les fichiers et execute
 default: \
-		classes \
+		compile \
 		execute
 
-execute:
-		$(J) src.Hop
+# Compile les fichiers .java
+compile:
+		$(JC) $(JFLAGS) $(LIB) src/*.java
 
-classes: $(CLASSES:.java=.class)
+# Execute le programme
+execute:
+		$(J) $(JFLAGS) .:$(LIB) src/Hop
+
 
 # Nettoie le répertoire src des .class
 clean:
